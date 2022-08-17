@@ -2,19 +2,28 @@ package modelo;
 
 public interface OperacoesInterface {
 	
-	//OPERACOES DE ENTRADA
-	boolean login();
-	
 	//OPERACOES DE INCLUSAO
 	void adicionarBibliotecario(Bibliotecario bibliotecario);
-	void adicionarNovoLivro(Livro livro);
-	void adicionarEstoque(Livro livro, int qtde);
-	void adicionarCliente();
+	void adicionarLivroNovo(Livro livro);
+	void adicionarLivroQtde(Long id, int qtde);
+	void adicionarCliente(Cliente cliente);
 	
 	//OPERACOES DE EXCLUSAO
-	void removerBibliotecario(Bibliotecario bibliotecario);
-	void removerLivro(Livro livro);
-	void removerEstoque(Livro livro, int qtde);
-	void removerCliente();
+	void removerBibliotecario(Long matricula);
+	void removerLivroTotal(Long id);
+	void removerLivroParcial(Long id, int qtde);
+	void removerCliente(Long cpf);
 	
+	//OPERACOES DE ALTERACAO
+	void alterarBibliotecario(Long matricula, Bibliotecario bibliotecario);
+	void alterarCliente(Long cpf, Cliente cliente);
+	void alterarLivro(Long id, Livro livro);
+	
+	//OPERACOES DE CONSULTA
+	String consultarLivroUnico(Long id);
+	String consultarLivrosTotais();
+	String consultarBibliotecarioUnico(Long matricula);
+	String consultarBibliotecariosTotais();
+	String consultarClienteUnico(Long cpf);
+	String consultarClientesTotais();	
 }

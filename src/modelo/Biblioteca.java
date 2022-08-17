@@ -3,12 +3,12 @@ package modelo;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Biblioteca {
+public class Biblioteca implements OperacoesInterface {
 	
 	//ATRIBUTOS
-	static private List<Bibliotecario> bibliotecarios = new ArrayList<>();
-	static private List<Cliente> clientes = new ArrayList<>();
-	static private List<Livro> livros = new ArrayList<>();
+	static List<Bibliotecario> bibliotecarios = new ArrayList<>();
+	static List<Cliente> clientes = new ArrayList<>();
+	static List<Livro> livros = new ArrayList<>();
 	
 	
 	//CONSTRUTOR
@@ -16,25 +16,153 @@ public class Biblioteca {
 		
 	}
 
-	
-	//GETTERS E SETTERS
-	public static List<Bibliotecario> getBibliotecarios() {
-		return bibliotecarios;
+
+	//METODOS
+	@Override
+	public void adicionarBibliotecario(Bibliotecario bibliotecario) {
+		if(!bibliotecarios.contains(bibliotecario)) bibliotecarios.add(bibliotecario);
 	}
-	public static void setBibliotecarios(List<Bibliotecario> bibliotecarios) {
-		Biblioteca.bibliotecarios = bibliotecarios;
+
+	@Override
+	public void adicionarLivroNovo(Livro livro) {
+		if(!livros.contains(livro)) livros.add(livro);	
 	}
-	public static List<Cliente> getClientes() {
-		return clientes;
+
+	@Override
+	public void adicionarLivroQtde(Long id, int qtde) {
+		for(Livro l : livros) {
+			if(l.getId() == id) {
+				l.atualizarQtde(qtde);
+			}
+		}
 	}
-	public static void setClientes(List<Cliente> clientes) {
-		Biblioteca.clientes = clientes;
+
+	@Override
+	public void adicionarCliente(Cliente cliente) {
+		if(!clientes.contains(cliente)) clientes.add(cliente);
 	}
-	public static List<Livro> getLivros() {
-		return livros;
+
+	@Override
+	public void removerBibliotecario(Long matricula) {
+		for(Bibliotecario b : bibliotecarios) {
+			if(b.getMatricula() == matricula) {
+				bibliotecarios.remove(b);
+			}
+		}		
 	}
-	public static void setLivros(List<Livro> livros) {
-		Biblioteca.livros = livros;
+
+	@Override
+	public void removerLivroTotal(Long id) {
+		for(Livro l : livros) {
+			if(l.getId() == id) {
+				livros.remove(l);
+			}
+		}		
+	}
+
+	@Override
+	public void removerLivroParcial(Long id, int qtde) {
+		for(Livro l : livros) {
+			if(l.getId() == id) {
+				l.atualizarQtde(qtde);
+			}
+		}
+	}
+
+	@Override
+	public void removerCliente(Long cpf) {
+		for(Cliente c : clientes) {
+			if(c.getCpf() == cpf) {
+				clientes.remove(c);
+			}
+		}		
+	}
+
+	@Override
+	public void alterarBibliotecario(Long matricula, Bibliotecario b) {
+		removerBibliotecario(matricula);
+		adicionarBibliotecario(b);
+	}
+
+	@Override
+	public void alterarCliente(Long cpf, Cliente cliente) {
+		removerCliente(cpf);
+		adicionarCliente(cliente);
+	}
+
+	@Override
+	public void alterarLivro(Long id, Livro livro) {
+		removerLivroTotal(id);
+		adicionarLivroNovo(livro);
+	}
+
+	@Override
+	public String consultarLivroUnico(Long id) {
+		for(Livro l : livros) {
+			if(l.getId() == id) {
+				return l.toString();
+			}
+		}	
+		
+		return "Livro não encontrado!";
+	}
+
+	@Override
+	public String consultarLivrosTotais() {
+		
+		String t = "";
+		
+		for(Livro l : livros) {
+			t += l.toString() + "\n";
+		}
+		
+		return t;
+	}
+
+	@Override
+	public String consultarBibliotecarioUnico(Long matricula) {
+		for(Bibliotecario b : bibliotecarios) {
+			if(b.getMatricula() == matricula) {
+				return b.toString();
+			}
+		}	
+		
+		return "Bibliotecario não encontrado!";
+	}
+
+	@Override
+	public String consultarBibliotecariosTotais() {
+		
+		String t = "";
+		
+		for(Bibliotecario b : bibliotecarios) {
+			t += b.toString() + "\n";
+		}
+		
+		return t;		
+	}
+
+	@Override
+	public String consultarClienteUnico(Long cpf) {
+		for(Cliente c : clientes) {
+			if(c.getCpf() == cpf) {
+				return c.toString();
+			}
+		}
+		
+		return "Cliente não encontrado!";
+	}
+
+	@Override
+	public String consultarClientesTotais() {
+		
+		String t = "";
+		
+		for(Cliente c : clientes) {
+			t += c.toString() + "\n";
+		}
+		
+		return t;		
 	}
 	
 }
