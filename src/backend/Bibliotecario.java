@@ -1,6 +1,4 @@
-package modelo;
-
-import java.util.Date;
+package backend;
 
 public class Bibliotecario extends Pessoa {
 	
@@ -10,13 +8,20 @@ public class Bibliotecario extends Pessoa {
 	private String senha;
 	
 	//CONSTRUTOR
-	public Bibliotecario(Long cpf, String nome, String telefone, Date dataNascimento, Long matricula, String login, String senha) {
-        super(cpf, nome, telefone, dataNascimento);
+	public Bibliotecario(Long cpf, String nome, String telefone, 
+			Long matricula, String login, String senha) {
+        super(cpf, nome, telefone);
         this.matricula = matricula;
         this.login = login;
         this.senha = senha;
     }
 
+	//METODOS
+	@Override
+	public String toString() {
+		return super.toString() + " matricula=" + matricula + ", login=" + login + ", senha=" + senha + "]";
+	}
+	
 	
 	//GETTERS E SETTERS
 	public Long getMatricula() {
@@ -39,3 +44,4 @@ public class Bibliotecario extends Pessoa {
 	}
 	
 }
+

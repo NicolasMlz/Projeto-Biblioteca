@@ -1,6 +1,4 @@
-package modelo;
-
-import java.util.Date;
+package backend;
 
 public abstract class Pessoa {
 	
@@ -8,21 +6,27 @@ public abstract class Pessoa {
 	private Long cpf;
 	private String nome;
 	private String telefone;
-	private Date dataNascimento;
 	
 	//CONSTRUTOR
-	public Pessoa(Long cpf, String nome, String telefone, Date dataNascimento) {
+	public Pessoa(Long cpf, String nome, String telefone) {
         super();
         this.cpf = cpf;
         this.nome = nome;
         this.telefone = telefone;
-        this.dataNascimento = dataNascimento;
     }
+	
+	//METODOS
+	@Override
+	public String toString() {
+		return "Pessoa [cpf=" + cpf + ", nome=" + nome + ", telefone=" + telefone + ",";
+	}
+	
 	
 	//GETTER E SETTERS
 	public Long getCpf() {
 		return cpf;
 	}
+
 	public void setCpf(Long cpf) {
 		this.cpf = cpf;
 	}
@@ -37,12 +41,6 @@ public abstract class Pessoa {
 	}
 	public void setTelefone(String telefone) {
 		this.telefone = telefone;
-	}
-	public Date getDataNascimento() {
-		return dataNascimento;
-	}
-	public void setDataNascimento(Date dataNascimento) {
-		this.dataNascimento = dataNascimento;
 	}
 	
 }

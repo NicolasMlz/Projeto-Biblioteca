@@ -1,4 +1,4 @@
-package modelo;
+package backend;
 
 public class Livro {
 	
@@ -29,12 +29,13 @@ public class Livro {
 	void atualizarQtde(int qtde) {
 		this.qtdeTotal += qtde;
 	}
-	
 	@Override
 	public String toString() {
-		return super.toString();
+		return "Livro [id=" + id + ", titulo=" + titulo + ", autor=" + autor + ", editora=" + editora + ", edicao="
+				+ edicao + ", genero=" + genero + ", qtdeTotal=" + qtdeTotal + ", qtdeDisponiveis=" + qtdeDisponiveis
+				+ "]";
 	}
-	
+
 	//GETTER E SETTERS
 	public Long getId() {
 		return id;

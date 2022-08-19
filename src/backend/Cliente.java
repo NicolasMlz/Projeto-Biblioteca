@@ -1,7 +1,6 @@
-package modelo;
+package backend;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class Cliente extends Pessoa {
@@ -11,11 +10,16 @@ public class Cliente extends Pessoa {
 	private List<Livro> livrosAlugados = new ArrayList<>();
 	
 	//CONSTRUTOR
-	public Cliente(Long cpf, String nome, String telefone, Date dataNascimento, String email) {
-        super(cpf, nome, telefone, dataNascimento);
+	public Cliente(Long cpf, String nome, String telefone, String email) {
+        super(cpf, nome, telefone);
         this.email = email;
     }
 
+	//METODOS
+	@Override
+	public String toString() {
+		return super.toString() + " email=" + email + ", livrosAlugados=" + livrosAlugados + "]";
+	}
 	
 	//GETTERS E SETTERS
 	public String getEmail() {
