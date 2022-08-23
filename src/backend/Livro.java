@@ -12,7 +12,7 @@ public class Livro {
 	private int qtdeTotal;
 	private int qtdeDisponiveis;
 	
-	//CONSTRUTOR
+	//CONSTRUTORES
 	public Livro(Long id, String titulo, String autor, String editora, int edicao, String genero, int qtdeTotal,
 			int qtdeDisponiveis) {
 		this.id = id;
@@ -24,6 +24,16 @@ public class Livro {
 		this.qtdeTotal = qtdeTotal;
 		this.qtdeDisponiveis = qtdeDisponiveis;
 	}
+	public Livro(Long id, String titulo, String autor, String editora, int edicao, String genero, int qtdeTotal) {
+		this.id = id;
+		this.titulo = titulo;
+		this.autor = autor;
+		this.editora = editora;
+		this.edicao = edicao;
+		this.genero = genero;
+		this.qtdeTotal = qtdeTotal;
+		this.qtdeDisponiveis = qtdeTotal;
+	}
 	
 	//METODOS
 	void atualizarQtde(int qtde) {
@@ -31,9 +41,9 @@ public class Livro {
 	}
 	@Override
 	public String toString() {
-		return "Livro [id=" + id + ", titulo=" + titulo + ", autor=" + autor + ", editora=" + editora + ", edicao="
-				+ edicao + ", genero=" + genero + ", qtdeTotal=" + qtdeTotal + ", qtdeDisponiveis=" + qtdeDisponiveis
-				+ "]";
+		return "Titulo: " + titulo + " - Id: " + id + " - autor: " + autor + " - editora: " + editora + " - edicao:"
+				+ edicao + " - genero:" + genero + " - qtdeTotal:" + qtdeTotal + " - qtdeDisponiveis:" + qtdeDisponiveis
+				+ "\n";
 	}
 
 	//GETTER E SETTERS

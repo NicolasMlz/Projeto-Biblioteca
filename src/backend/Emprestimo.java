@@ -1,5 +1,6 @@
 package backend;
 
+import java.util.Calendar;
 import java.util.Date;
 
 public class Emprestimo {
@@ -11,21 +12,50 @@ public class Emprestimo {
 	private Date dataDevolucao;
 	
 	//CONSTRUTOR
-	public Emprestimo(Long cpf_cliente, Long id_livro, Date dataEmprestimo, Date dataDevolucao) {
+	public Emprestimo(Long cpf_cliente, Long id_livro, Date dataEmprestimo) {
 		super();
 		this.cpf_cliente = cpf_cliente;
 		this.id_livro = id_livro;
 		this.dataEmprestimo = dataEmprestimo;
-		this.dataDevolucao = dataDevolucao;
+		
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(dataEmprestimo);
+		cal.add(Calendar.DATE, 14);
+		this.dataDevolucao = cal.getTime();
 	}
 	
 	
 	//METODOS
-	void alugarLivro(Long cpf, Long id) {}
-	void devolverLivro(Long cpf, Long id) {}
+    public boolean alugarLivro() {
+        for( Livro l : Biblioteca.livros) {
+            if(l.getId().equals(this.id_livro)) {
+                for(Cliente c : Biblioteca.clientes) {
+                    if(c.getCpf().equals(this.cpf_cliente)) {
+                        l.setQtdeDisponiveis(l.getQtdeDisponiveis() - 1);
+                        c.adicionarLivroAlugado(l);
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+    public boolean devolverLivro() {
+        for( Livro l : Biblioteca.livros) {
+            if(l.getId().equals(this.id_livro)) {
+                for(Cliente c : Biblioteca.clientes) {
+                    if(c.getCpf().equals(this.cpf_cliente)) {
+                        l.setQtdeDisponiveis(l.getQtdeDisponiveis() + 1);
+                        c.removerLivroAlugado(l);
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
 
 
-	
 	//GETTERS E SETTERS
 	public Long getCpf_cliente() {
 		return cpf_cliente;

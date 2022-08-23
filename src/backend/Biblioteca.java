@@ -18,7 +18,6 @@ public class Biblioteca {
 
 
 	//METODOS
-	
 	public static boolean loginCorreto(String login, String senha) {
 		for(Bibliotecario b : bibliotecarios) {
 			if(b.getLogin().equals(login) && b.getSenha().equals(senha)) {
@@ -29,96 +28,137 @@ public class Biblioteca {
 		return false;
 	}
 	
-	public static void adicionarBibliotecario(Bibliotecario bibliotecario) {
+	public static boolean adicionarBibliotecario(Bibliotecario bibliotecario) {
 		for(Bibliotecario b : bibliotecarios) {
 			if(b.getMatricula().equals(bibliotecario.getMatricula())) {
-				System.out.println("Bibliotecario já cadastrado!");
-				break;
+				
+				return false;
 			}
 		}
 		
 		bibliotecarios.add(bibliotecario);
+		return true;
 	}
 
-	public static void adicionarLivroNovo(Livro livro) {
+	public static boolean adicionarLivroNovo(Livro livro) {
 		for(Livro l : livros) {
 			if(l.getId().equals(livro.getId())) {
-				System.out.println("Livro já cadastrado!");
-				break;
+				return false;
 			}
 		}	
 		
 		livros.add(livro);	
+		return true;
 	}
 
-	public static void adicionarLivroQtde(Long id, int qtde) {
+	public static boolean adicionarLivroQtde(Long id, int qtde) {
 		for(Livro l : livros) {
 			if(l.getId().equals(id)) {
 				l.atualizarQtde(qtde);
+				return true;
 			}
 		}
+		
+		return false;
 	}
 
-	public static void adicionarCliente(Cliente cliente) {
+	public static boolean adicionarCliente(Cliente cliente) {
 		for(Cliente c : clientes) {
 			if(c.getCpf().equals(cliente.getCpf())) {
-				System.out.println("Cliente já cadastrado!");
-				break;
+				return false;
 			}
 		}	
 		
 		clientes.add(cliente);
+		return true;
 	}
 
-	public static void removerBibliotecario(Long matricula) {
+	public static boolean removerBibliotecario(Long matricula) {
 		for(Bibliotecario b : bibliotecarios) {
 			if(b.getMatricula().equals(matricula)) {
 				bibliotecarios.remove(b);
-				break;
+				return true;
 			}
-		}		
+		}	
+		
+		return false;
 	}
 
-	public static void removerLivroTotal(Long id) {
+	public static boolean removerLivroTotal(Long id) {
 		for(Livro l : livros) {
 			if(l.getId().equals(id)) {
 				livros.remove(l);
-				break;
+				return true;
 			}
-		}		
+		}	
+		
+		return false;
 	}
 
-	public static void removerLivroParcial(Long id, int qtde) {
+	public static boolean removerLivroParcial(Long id, int qtde) {
 		for(Livro l : livros) {
 			if(l.getId().equals(id)) {
+				if((l.getQtdeTotal() - l.getQtdeDisponiveis()) <= qtde) 
+					qtde = (l.getQtdeTotal() - l.getQtdeDisponiveis()) * -1;
+				else 
+					qtde *= -1;
+				
 				l.atualizarQtde(qtde);
-				break;
+				return true;
 			}
 		}
+		
+		return false;
 	}
 
-	public static void removerCliente(Long cpf) {
+	public static boolean removerCliente(Long cpf) {
 		for(Cliente c : clientes) {
 			if(c.getCpf().equals(cpf)) {
 				clientes.remove(c);
-				break;
+				return true;
 			}
-		}		
+		}	
+		
+		return false;
 	}
 
-	public static void alterarBibliotecario(Long matricula, Bibliotecario b) {
-		removerBibliotecario(matricula);
-		adicionarBibliotecario(b);
+	public static boolean alterarBibliotecario(Long matricula, Bibliotecario b) {
+		
+		if(removerBibliotecario(matricula)) {
+			removerBibliotecario(matricula);
+			if(adicionarBibliotecario(b)) {
+				adicionarBibliotecario(b);
+				return true;
+			}
+		}
+		
+		return false;
 	}
 
-	public static void alterarCliente(Long cpf, Cliente cliente) {
-		removerCliente(cpf);
-		adicionarCliente(cliente);
+	public static boolean alterarCliente(Long cpf, Cliente cliente) {
+		
+		if(removerCliente(cpf)) {
+			removerCliente(cpf);
+			if(adicionarCliente(cliente)) {
+				adicionarCliente(cliente);
+				return true;
+			}
+		}
+		
+		return false;
 	}
 
-	public static void alterarLivro(Long id, Livro livro) {
-		removerLivroTotal(id);
-		adicionarLivroNovo(livro);
+	public static boolean alterarLivro(Long id, Livro livro) {
+		
+		if(removerLivroTotal(id)) {
+			removerLivroTotal(id);
+			if(adicionarLivroNovo(livro)) {
+				adicionarLivroNovo(livro);
+				return true;
+			}
+		}
+		
+		return false;
 	}
 
 	public static String consultarLivroUnico(Long id) {
@@ -128,7 +168,21 @@ public class Biblioteca {
 			}
 		}	
 		
-		return "Livro não encontrado!";
+		return "";
+	}
+	
+	public static String consultarLivroUnico(String nome) {
+		
+		String todos = "";
+		
+		for(Livro l : livros) {
+			if(l.getTitulo().equals(nome)) {
+				todos += l.toString();
+				todos+="\n";
+			}
+		}	
+		
+		return todos;
 	}
 
 	public static String consultarLivrosTotais() {
@@ -149,7 +203,7 @@ public class Biblioteca {
 			}
 		}	
 		
-		return "Bibliotecario não encontrado!";
+		return "";
 	}
 
 	public static String consultarBibliotecariosTotais() {
@@ -170,7 +224,7 @@ public class Biblioteca {
 			}
 		}
 		
-		return "Cliente não encontrado!";
+		return "";
 	}
 
 	public static String consultarClientesTotais() {

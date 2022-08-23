@@ -18,8 +18,14 @@ public class Cliente extends Pessoa {
 	//METODOS
 	@Override
 	public String toString() {
-		return super.toString() + " email=" + email + ", livrosAlugados=" + livrosAlugados + "]";
+		return super.toString() + " - Email: " + email + " - Livros alugados: " + livrosAlugados + "\n";
 	}
+	public void adicionarLivroAlugado(Livro livro) {
+        livrosAlugados.add(livro);
+    }
+    public void removerLivroAlugado(Livro livro) {
+        livrosAlugados.remove(livro);
+    }
 	
 	//GETTERS E SETTERS
 	public String getEmail() {
