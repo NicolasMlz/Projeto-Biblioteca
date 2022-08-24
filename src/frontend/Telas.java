@@ -505,6 +505,7 @@ public class Telas {
     	System.out.print("Digite o a data do emprestimo (dd/mm/yyyy): ");
     	data = sc.next();
     	
+    	//FORMARTAR DATA DE EMPRESTIMO A PARTIR DA STRING
     	SimpleDateFormat formatter = new SimpleDateFormat("dd/mm/yyyy");
     	try {
     		

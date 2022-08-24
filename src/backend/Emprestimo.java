@@ -19,9 +19,10 @@ public class Emprestimo {
 		this.id_livro = id_livro;
 		this.dataEmprestimo = dataEmprestimo;
 		
+		//DEFINIR DATA DE DEVOLUCAO
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(dataEmprestimo);
-		cal.add(Calendar.DATE, 18);
+		cal.add(Calendar.DATE, 14);
 		this.dataDevolucao = cal.getTime();
 	}
 	
