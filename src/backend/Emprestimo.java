@@ -64,9 +64,9 @@ public class Emprestimo {
     @Override
     public String toString() {
 
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/mm/yyyy");
-        String dtEmprestar = formatter.format(dataEmprestimo);
-        String dtDevolver = formatter.format(dataDevolucao);
+        SimpleDateFormat f1 = new SimpleDateFormat("dd/MM/yyyy");
+        String dtDevolver = f1.format(dataDevolucao);
+        String dtEmprestar = f1.format(dataEmprestimo);
 
         String atrasado;
 
