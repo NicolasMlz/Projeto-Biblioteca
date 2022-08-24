@@ -18,7 +18,7 @@ public class Biblioteca {
 		
 	}
 
-
+	
 	//METODOS
 	public static String consultarEmprestimosTotais() {
 		
@@ -45,12 +45,14 @@ public class Biblioteca {
 	}
 	
 	public static boolean alugarLivroBiblioteca(Long cpf_cliente, Long id_livro, Date dataEmprestimo) {
+		
         Emprestimo e = new Emprestimo(cpf_cliente, id_livro, dataEmprestimo);
 
         if(e.alugarLivro()) {
             emprestimos.add(e);
             return true;
         }
+        
         return false;
     }
 	

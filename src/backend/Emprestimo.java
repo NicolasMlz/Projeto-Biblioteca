@@ -1,5 +1,6 @@
 package backend;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -59,17 +60,22 @@ public class Emprestimo {
         }
         return false;
     }
+    
     @Override
-	public String toString() {
-    	
-    	String atrasado;
-    	
-    	if(emprestimoAtrasado()) atrasado = "Sim!";
-    	else atrasado = "Nao!";
-    	
-		return "Cpf do cliente: " + cpf_cliente + " - Id do livro: " + id_livro + " - Data do emprestimo: "
-				+ dataEmprestimo + " - Data de devolucao: " + dataDevolucao + " - Atrasado?" + atrasado + "\n";
-	}
+    public String toString() {
+
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/mm/yyyy");
+        String dtEmprestar = formatter.format(dataEmprestimo);
+        String dtDevolver = formatter.format(dataDevolucao);
+
+        String atrasado;
+
+        if(emprestimoAtrasado()) atrasado = "Sim!";
+        else atrasado = "Nao!";
+
+        return "Cpf do cliente: " + cpf_cliente + " - Id do livro: " + id_livro + " - Data do emprestimo: "
+                + dtEmprestar + " - Data de devolucao: " + dtDevolver + " - Atrasado? " + atrasado + "\n";
+    }
     
     public boolean emprestimoAtrasado() {
     	if(livroDevolvido == false && dataDevolucao.before(new Date())) {
