@@ -1,12 +1,14 @@
 package backend;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class Biblioteca {
 	
 	//ATRIBUTOS
 	static List<Bibliotecario> bibliotecarios = new ArrayList<>();
+	static List<Emprestimo> emprestimos = new ArrayList<>();
 	static List<Cliente> clientes = new ArrayList<>();
 	static List<Livro> livros = new ArrayList<>();
 	
@@ -18,6 +20,52 @@ public class Biblioteca {
 
 
 	//METODOS
+	public static String consultarEmprestimosTotais() {
+		
+		String resultado="";
+		
+		for(Emprestimo e : emprestimos) {
+			resultado += e.toString();
+		}
+		
+		return resultado;
+	}
+	
+	public static String consultarEmprestimosAtrasados() {
+		
+		String resultado="";
+		
+		for(Emprestimo e : emprestimos) {
+			if(e.emprestimoAtrasado()) {
+				resultado += e.toString();
+			}
+		}
+		
+		return resultado;		
+	}
+	
+	public static boolean alugarLivroBiblioteca(Long cpf_cliente, Long id_livro, Date dataEmprestimo) {
+        Emprestimo e = new Emprestimo(cpf_cliente, id_livro, dataEmprestimo);
+
+        if(e.alugarLivro()) {
+            emprestimos.add(e);
+            return true;
+        }
+        return false;
+    }
+	
+    public static boolean devolverLivroBiblioteca(Long cpf_cliente, Long id_livro) {
+
+        for(Emprestimo e : emprestimos) {
+            if(e.getCpf_cliente().equals(cpf_cliente) && e.getId_livro().equals(id_livro)) {
+                e.devolverLivro();
+                return true;
+            }
+        }
+
+        return false;
+    }
+	
 	public static boolean loginCorreto(String login, String senha) {
 		for(Bibliotecario b : bibliotecarios) {
 			if(b.getLogin().equals(login) && b.getSenha().equals(senha)) {

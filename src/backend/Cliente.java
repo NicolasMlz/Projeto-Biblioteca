@@ -18,7 +18,11 @@ public class Cliente extends Pessoa {
 	//METODOS
 	@Override
 	public String toString() {
-		return super.toString() + " - Email: " + email + " - Livros alugados: " + livrosAlugados + "\n";
+		String livros = "";
+		for(Livro l : livrosAlugados) {
+			livros += l.toStringCliente();
+		}
+		return super.toString() + " - Email: " + email + "\nLivros alugados: \n" + livros + "\n";
 	}
 	public void adicionarLivroAlugado(Livro livro) {
         livrosAlugados.add(livro);

@@ -12,18 +12,7 @@ public class Livro {
 	private int qtdeTotal;
 	private int qtdeDisponiveis;
 	
-	//CONSTRUTORES
-	public Livro(Long id, String titulo, String autor, String editora, int edicao, String genero, int qtdeTotal,
-			int qtdeDisponiveis) {
-		this.id = id;
-		this.titulo = titulo;
-		this.autor = autor;
-		this.editora = editora;
-		this.edicao = edicao;
-		this.genero = genero;
-		this.qtdeTotal = qtdeTotal;
-		this.qtdeDisponiveis = qtdeDisponiveis;
-	}
+	//CONSTRUTOR
 	public Livro(Long id, String titulo, String autor, String editora, int edicao, String genero, int qtdeTotal) {
 		this.id = id;
 		this.titulo = titulo;
@@ -44,6 +33,9 @@ public class Livro {
 		return "Titulo: " + titulo + " - Id: " + id + " - autor: " + autor + " - editora: " + editora + " - edicao:"
 				+ edicao + " - genero:" + genero + " - qtdeTotal:" + qtdeTotal + " - qtdeDisponiveis:" + qtdeDisponiveis
 				+ "\n";
+	}
+	public String toStringCliente() {
+		return "Titulo: " + titulo + " - Id: " + id + "\n";
 	}
 
 	//GETTER E SETTERS

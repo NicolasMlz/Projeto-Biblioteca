@@ -8,7 +8,6 @@ import java.util.Scanner;
 import backend.Biblioteca;
 import backend.Bibliotecario;
 import backend.Cliente;
-import backend.Emprestimo;
 import backend.Livro;
 
 public class Telas {
@@ -27,7 +26,7 @@ public class Telas {
 		while(sistAberto == 1) {
 			
 			//Opcoes
-			System.out.println("Sistema da Biblioteca");
+			System.out.println("\nSistema da Biblioteca");
 			System.out.println("(1) Sign-up\n(2) Cadastre-se\n");
 			System.out.print("Sua escolha: ");
 			int escolha = sc.nextInt();
@@ -124,6 +123,8 @@ public class Telas {
 			System.out.println("(17) Remover cliente");
 			System.out.println("(18) REGISTRAR EMPRÉSTIMO DO LIVRO (CLIENTE)");
 			System.out.println("(19) REGISTRAR DEVOLUÇÃO DO LIVRO (CLIENTE)");
+			System.out.println("(20) CONSULTAR EMPRESTIMOS PENDENTES");
+			System.out.println("(21) CONSULTAR EMPRESTIMOS ATRASADOS");
 			System.out.println("--------------------------------------------");
 			System.out.print("Sua escolha: ");
 			escolha = sc.nextInt();
@@ -171,6 +172,10 @@ public class Telas {
 	            telaEmprestimo();
 	        } else if(escolha == 19) {
 	            telaDevolucao();
+	        } else if(escolha == 20) {
+	            System.out.println(Biblioteca.consultarEmprestimosTotais());
+	        } else if(escolha == 21) {
+	        	System.out.println(Biblioteca.consultarEmprestimosAtrasados());
 	        } else {
 				System.err.println("Escolha inválida!\n");
 			}
@@ -185,7 +190,7 @@ public class Telas {
 		
 		System.out.println("Escolha o método de consulta:");
 		System.out.println("(1) Nome do livro\n(2) Id do livro\n");
-		System.out.println("Sua escolha: ");
+		System.out.print("Sua escolha: ");
 		escolhaAux = sc.nextInt();
 		
 		if(escolhaAux == 1) {
@@ -497,31 +502,46 @@ public class Telas {
     	cpf = sc.nextLong();
     	System.out.print("Digite o id do livro a ser emprestado: ");
     	id = sc.nextLong();
-    	System.out.print("Digite o a data do emprestimo (dd/MM/yyyy): ");
+    	System.out.print("Digite o a data do emprestimo (dd/mm/yyyy): ");
     	data = sc.next();
     	
-    	SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+    	SimpleDateFormat formatter = new SimpleDateFormat("dd/mm/yyyy");
     	try {
     		
     		//Instanciar data 
 			Date date = formatter.parse(data);
 			
-			//Registrar emprestimo
-			Emprestimo e = new Emprestimo(cpf, id, date);
-			
-			if(e.alugarLivro()) {
+			//Registrar emprestimo			
+			if(Biblioteca.alugarLivroBiblioteca(cpf, id, date)) {
 				System.out.println("Emprestimo realizado com sucesso!");
-				System.out.println("O cliente tem 14 dias para a devolução do livro.");
+				System.out.println("O cliente tem deve devolver o livro em 14 dias uteis.");
 			} else {
-				System.out.println("Falha ao realizar emprestimo");
+				System.out.println("Falha ao realizar emprestimo.");
 			}
 		}  catch (ParseException e) {
-			
+			System.out.println("Falha ao realizar emprestimo.");
 		}
 
     }
     
     public static void telaDevolucao() {
     	
+        //Variaveis
+        Long cpf, id;
+
+        //Dados iniciais
+        sc.nextLine();
+        System.out.print("Digite o cpf do cliente: ");
+        cpf = sc.nextLong();
+        System.out.print("Digite o id do livro a ser devolvido: ");
+        id = sc.nextLong();
+
+        if(Biblioteca.devolverLivroBiblioteca(cpf, id)) {
+            System.out.println("Livro devolvido com sucesso!");
+        }
+        else {
+            System.out.println("Erro ao devolver livro. Dados inválidos!");
+        }
     }
+
 }

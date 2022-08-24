@@ -10,6 +10,7 @@ public class Emprestimo {
 	private Long id_livro;
 	private Date dataEmprestimo;
 	private Date dataDevolucao;
+	private boolean livroDevolvido;
 	
 	//CONSTRUTOR
 	public Emprestimo(Long cpf_cliente, Long id_livro, Date dataEmprestimo) {
@@ -20,19 +21,20 @@ public class Emprestimo {
 		
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(dataEmprestimo);
-		cal.add(Calendar.DATE, 14);
+		cal.add(Calendar.DATE, 18);
 		this.dataDevolucao = cal.getTime();
 	}
 	
 	
 	//METODOS
-    public boolean alugarLivro() {
+	public boolean alugarLivro() {
         for( Livro l : Biblioteca.livros) {
             if(l.getId().equals(this.id_livro)) {
                 for(Cliente c : Biblioteca.clientes) {
                     if(c.getCpf().equals(this.cpf_cliente)) {
                         l.setQtdeDisponiveis(l.getQtdeDisponiveis() - 1);
                         c.adicionarLivroAlugado(l);
+                        setLivroDevolvido(false);
                         return true;
                     }
                 }
@@ -40,6 +42,7 @@ public class Emprestimo {
         }
         return false;
     }
+	
     public boolean devolverLivro() {
         for( Livro l : Biblioteca.livros) {
             if(l.getId().equals(this.id_livro)) {
@@ -47,12 +50,31 @@ public class Emprestimo {
                     if(c.getCpf().equals(this.cpf_cliente)) {
                         l.setQtdeDisponiveis(l.getQtdeDisponiveis() + 1);
                         c.removerLivroAlugado(l);
+                        livroDevolvido = true;
                         return true;
                     }
                 }
             }
         }
         return false;
+    }
+    @Override
+	public String toString() {
+    	
+    	String atrasado;
+    	
+    	if(emprestimoAtrasado()) atrasado = "Sim!";
+    	else atrasado = "Nao!";
+    	
+		return "Cpf do cliente: " + cpf_cliente + " - Id do livro: " + id_livro + " - Data do emprestimo: "
+				+ dataEmprestimo + " - Data de devolucao: " + dataDevolucao + " - Atrasado?" + atrasado + "\n";
+	}
+    
+    public boolean emprestimoAtrasado() {
+    	if(livroDevolvido == false && dataDevolucao.before(new Date())) {
+    		return true;
+    	}
+    	return false;
     }
 
 
@@ -80,5 +102,11 @@ public class Emprestimo {
 	}
 	public void setDataDevolucao(Date dataDevolucao) {
 		this.dataDevolucao = dataDevolucao;
+	}
+	public boolean isLivroDevolvido() {
+		return livroDevolvido;
+	}
+	public void setLivroDevolvido(boolean livroDevolvido) {
+		this.livroDevolvido = livroDevolvido;
 	}
 }
