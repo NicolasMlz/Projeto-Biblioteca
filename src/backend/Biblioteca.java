@@ -218,7 +218,7 @@ public class Biblioteca {
 			}
 		}	
 		
-		return "";
+		return "Livro nao cadastrado!";
 	}
 	
 	public static String consultarLivroUnico(String nome) {
@@ -253,7 +253,7 @@ public class Biblioteca {
 			}
 		}	
 		
-		return "";
+		return "Matricula nao cadastrada!";
 	}
 
 	public static String consultarBibliotecariosTotais() {
@@ -274,7 +274,7 @@ public class Biblioteca {
 			}
 		}
 		
-		return "";
+		return "Cliente nao cadastrado!";
 	}
 
 	public static String consultarClientesTotais() {
