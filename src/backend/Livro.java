@@ -30,12 +30,12 @@ public class Livro {
 	}
 	@Override
 	public String toString() {
-		return "Titulo: " + titulo + " - Id: " + id + " - autor: " + autor + " - editora: " + editora + " - edicao:"
-				+ edicao + " - genero:" + genero + " - qtdeTotal:" + qtdeTotal + " - qtdeDisponiveis:" + qtdeDisponiveis
+		return "Título: " + titulo + " - Id: " + id + " - autor: " + autor + " - editora: " + editora + " - edição:"
+				+ edicao + " - gênero:" + genero + " - quantidade total:" + qtdeTotal + " - quantidade disponíveis:" + qtdeDisponiveis
 				+ "\n";
 	}
 	public String toStringCliente() {
-		return "Titulo: " + titulo + " - Id: " + id + "\n";
+		return "Título: " + titulo + " - Id: " + id + "\n";
 	}
 
 	//GETTER E SETTERS

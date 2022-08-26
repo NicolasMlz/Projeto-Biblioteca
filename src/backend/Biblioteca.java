@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import exceptions.SenhaInvalidaException;
+
 public class Biblioteca {
 	
 	//ATRIBUTOS
@@ -218,7 +220,7 @@ public class Biblioteca {
 			}
 		}	
 		
-		return "Livro nao cadastrado!";
+		return "Livro não cadastrado!";
 	}
 	
 	public static String consultarLivroUnico(String nome) {
@@ -253,7 +255,7 @@ public class Biblioteca {
 			}
 		}	
 		
-		return "Matricula nao cadastrada!";
+		return "Matrícula não cadastrada!";
 	}
 
 	public static String consultarBibliotecariosTotais() {
@@ -274,7 +276,7 @@ public class Biblioteca {
 			}
 		}
 		
-		return "Cliente nao cadastrado!";
+		return "Cliente não cadastrado!";
 	}
 
 	public static String consultarClientesTotais() {
@@ -287,5 +289,7 @@ public class Biblioteca {
 		
 		return t;		
 	}
-	
+	public static List<Bibliotecario> getBibliotecarios() {
+        return bibliotecarios;
+    }
 }

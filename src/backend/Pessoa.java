@@ -18,7 +18,7 @@ public abstract class Pessoa {
 	//METODOS
 	@Override
 	public String toString() {
-		return "Nome: " + nome + "\ncpf: " + cpf + " - Telefone: " + telefone;
+		return "Nome: " + nome + "\nCpf: " + cpf + " - Telefone: " + telefone;
 	}
 	
 	

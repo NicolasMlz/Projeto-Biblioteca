@@ -2,6 +2,7 @@ package frontend;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -10,6 +11,7 @@ import backend.Biblioteca;
 import backend.Bibliotecario;
 import backend.Cliente;
 import backend.Livro;
+import exceptions.SenhaInvalidaException;
 
 public class Telas {
 
@@ -44,13 +46,16 @@ public class Telas {
 			}
 			
 			sc.close();
+		} catch (SenhaInvalidaException e) {
+			System.err.println(e.getMessage());
+			telaLogin();
 		} catch (Exception e) {
-			System.err.println("Opcao invalida.");
+			System.err.println("Opcão inválida!");
 			telaPrincipal();
 		}
 	}
 	
-	private static void telaLogin() {
+	private static void telaLogin() throws SenhaInvalidaException{
 		
 		//Variaveis 
 		String login;
@@ -67,45 +72,56 @@ public class Telas {
 			System.out.println("Login efetuado com sucesso!");
 			telaOpcoesSistema();
 		} else {
-			System.err.println("Falha ao efetuar o login.");
+			throw new SenhaInvalidaException("Senha Inválida Exception!\nTente novamente.\n");
 		}
 
 		
 	}
 	
 	private static void telaCadastro() {
-		try {
-			
-			//Variaveis 
-			Long cpf, matricula; 
-			String nome, telefone, login, senha;
-			
-			//Login e senha
-			System.out.print("Digite seu nome: ");
-			nome = sc.nextLine();
-			System.out.print("Digite seu telefone: ");
-			telefone = sc.nextLine();
-			System.out.print("Digite seu cpf: ");
-			cpf = sc.nextLong(); sc.nextLine();
-			System.out.print("Digite seu matricula: ");
-			matricula = sc.nextLong(); sc.nextLine();
-			System.out.print("Digite seu login: ");
-			login = sc.nextLine();
-			System.out.print("Digite seu senha: ");
-			senha = sc.nextLine();
-			
-			//Cadastrar novo biblitecario
-			Bibliotecario novo = new Bibliotecario(cpf, nome, telefone,  matricula, login, senha);
-			Biblioteca.adicionarBibliotecario(novo);
-			
-			//Saida
-			System.out.println("Usuario cadastrado com sucesso!");
-			
-		} catch (InputMismatchException e) {
-			System.err.println("CPF ou matricula invalidos!");
-		}
-	}
+        try {
 
+            //Variaveis 
+            Long cpf, matricula; 
+            String nome, telefone, login, senha;
+
+            //Login e senha
+            System.out.print("Digite seu nome: ");
+            nome = sc.nextLine();
+            System.out.print("Digite seu telefone: ");
+            telefone = sc.nextLine();
+            System.out.print("Digite seu cpf: ");
+            cpf = sc.nextLong(); sc.nextLine();
+            System.out.print("Digite sua matrícula: ");
+            matricula = sc.nextLong(); sc.nextLine();
+            System.out.print("Digite seu login: ");
+            login = sc.nextLine();
+            System.out.print("Digite sua senha: ");
+            senha = sc.nextLine();
+
+            for(Bibliotecario l : Biblioteca.getBibliotecarios()) {
+                if(l.getMatricula().equals(matricula)) {
+                    System.err.println("Erro! Matrícula já existente.");
+                    telaPrincipal(); 
+                }
+                else if(l.getLogin().equals(login)) {
+                    System.err.println("Erro! Usuário já existente.");
+                    telaPrincipal();
+                }
+            }
+
+            //Cadastrar novo biblitecario
+            Bibliotecario novo = new Bibliotecario(cpf, nome, telefone,  matricula, login, senha);
+            Biblioteca.adicionarBibliotecario(novo);
+
+            //Saida
+            System.out.println("Usuário cadastrado com sucesso!");
+
+        } catch (InputMismatchException e) {
+            System.err.println("CPF ou matrícula inválidos!");
+            sc.nextLine();
+        }
+    }
 	private static void telaOpcoesSistema() {
 		
 		//VARIAVEIS
@@ -198,7 +214,6 @@ public class Telas {
 			} catch (Exception e) {
 				System.err.println("Opção inválida. Digite um número!\n");
 				sc.nextLine();
-				telaOpcoesSistema();
 			}
 		} 
 			
@@ -227,7 +242,9 @@ public class Telas {
 			}
 		} catch (Exception e) {
 			System.err.println("Opcao invalida!");
+			sc.nextLine();
 		}
+	
 		
 	}
 
@@ -287,7 +304,7 @@ public class Telas {
 			if(Biblioteca.adicionarLivroNovo(novo)) {
 				System.out.println("Livro cadastrado com sucesso!");
 			} else {
-				System.out.println("Falha ao cadastrar!");
+				System.err.println("Falha ao cadastrar!");
 			}
 		} catch (Exception e) {
 			System.err.println("Falha ao cadastrar livro!");
@@ -309,7 +326,7 @@ public class Telas {
 			if(Biblioteca.adicionarLivroQtde(id, qtde)) {
 				System.out.println("Quantidade adicionada com sucesso!");
 			} else {
-				System.out.println("Id invalido!");
+				System.err.println("Id invalido!");
 			}
 		} catch (Exception e) {
 			System.err.println("Falha ao adicionar livro no estoque!");
@@ -344,12 +361,12 @@ public class Telas {
 			
 			//Saida
 			if(Biblioteca.adicionarBibliotecario(novo)) {
-				System.out.println("Usuario cadastrado com sucesso!");
+				System.out.println("Usuário cadastrado com sucesso!");
 			} else {
-				System.out.println("Falha ao cadastrar!");
+				System.err.println("Falha ao cadastrar!");
 			}
 		} catch (Exception e) {
-			System.err.println("Falha ao cadastrar bibliotecario!");
+			System.err.println("Falha ao cadastrar bibliotecário!");
 			sc.nextLine();
 		}
 	}
@@ -379,8 +396,9 @@ public class Telas {
 			if(Biblioteca.adicionarCliente(novo)) {
 				System.out.println("Cliente cadastrado com sucesso!");
 			} else {
-				System.out.println("Falha ao cadastrar!");
+				System.err.println("Falha ao cadastrar!");
 			}
+			
 		} catch (Exception e) {
 			System.err.println("Falha ao cadastrar cliente!");
 			sc.nextLine();
@@ -398,7 +416,7 @@ public class Telas {
 			
 			try {
 				sc.nextLine();
-				System.out.print("Digite o titulo: ");
+				System.out.print("Digite o título: ");
 				String titulo = sc.nextLine();
 				System.out.print("Digite o autor: ");
 				String autor = sc.nextLine();
@@ -418,14 +436,15 @@ public class Telas {
 				if(Biblioteca.alterarLivro(id, novo)) {
 					System.out.println("Livro alterado com sucesso!");
 				} else {
-					System.out.println("Falha ao alterar");
+					System.err.println("Falha ao alterar");
 				}
+				
 			} catch (Exception e) {
 				System.err.println("Falha ao alterar livro!");
 				sc.nextLine();
 			}
 		} else {
-			System.out.println("Id invalido!");
+			System.out.println("Id inválido!");
 		}
 		
 	}
@@ -433,7 +452,7 @@ public class Telas {
 	private static void telaAlterarBibliotecario() {
 		
 		Long matricula;
-		System.out.print("Digite a matricula do bibliotecario: ");
+		System.out.print("Digite a matrícula do bibliotecário: ");
 		matricula = sc.nextLong();
 		
 		//Dados
@@ -446,7 +465,7 @@ public class Telas {
 				String telefone = sc.nextLine();
 				System.out.print("Digite o cpf: ");
 				Long cpf = sc.nextLong(); sc.nextLine();
-				System.out.print("Digite a matricula: ");
+				System.out.print("Digite a matrícula: ");
 				matricula = sc.nextLong(); sc.nextLine();
 				System.out.print("Digite o login: ");
 				String login = sc.nextLine();
@@ -457,16 +476,16 @@ public class Telas {
 				Bibliotecario novo = new Bibliotecario(cpf, nome, telefone,  matricula, login, senha);
 				
 				if(Biblioteca.alterarBibliotecario(matricula, novo)) {
-					System.out.println("Sucesso ao alterar bibliotecario!");
+					System.out.println("Sucesso ao alterar bibliotecário!");
 				} else {
-					System.out.println("Falha ao alterar");
+					System.err.println("Falha ao alterar");
 				}
 			} catch (Exception e) {
-				System.err.println("Falha ao alterar bibliotecario!");
+				System.err.println("Falha ao alterar bibliotecário!");
 				sc.nextLine();
 			}
 		} else {
-			System.out.println("Matricula invalida!");
+			System.err.println("Matrícula inválida!");
 		}
 		
 	}
@@ -486,7 +505,7 @@ public class Telas {
 				String nome = sc.nextLine();
 				System.out.print("Digite o telefone: ");
 				String telefone = sc.nextLine();
-				System.out.print("Digite o email: ");
+				System.out.print("Digite o e-mail: ");
 				String email = sc.nextLine();
 				System.out.print("Digite o cpf: ");
 				cpf = sc.nextLong(); sc.nextLine();
@@ -498,14 +517,15 @@ public class Telas {
 				if(Biblioteca.alterarCliente(cpf, novo)) {
 					System.out.println("Sucesso ao alterar cliente!");
 				} else {
-					System.out.println("Falha ao alterar");
+					System.err.println("Falha ao alterar");
 				}
+				
 			} catch (Exception e) {
 				System.err.println("Falha ao alterar cliente!");
 				sc.nextLine();
 			}
 		} else {
-			System.out.println("Cpf invalido!");
+			System.err.println("Cpf inválido!");
 		}
 	}
 
@@ -518,10 +538,10 @@ public class Telas {
 			if(Biblioteca.removerLivroTotal(id)) {
 			    System.out.println("Livro removido!");
 			} else {
-				System.out.println("Livro nao encontrado!");
+				System.out.println("Livro não encontrado!");
 			}
 		} catch (Exception e) {
-			System.err.println("Id invalido!");
+			System.err.println("Id inválido!");
 			sc.nextLine();
 		}
         
@@ -532,24 +552,24 @@ public class Telas {
         	
 			System.out.print("Digite o id do livro: ");
 			Long id = sc.nextLong();
-			System.out.print("Digite a quantidade de livros a remover: ");
+			System.out.print("Digite a quantidade de livros a serem removidos: ");
 			int quantidade = sc.nextInt();
 			
 			if(Biblioteca.removerLivroParcial(id, quantidade)) {
 			    System.out.println("Quantidade de livro(s) removido(s)!");
 			} else {
-				System.out.println("Falha ao remover");
+				System.err.println("Falha ao remover");
 			}
 			
 		} catch (Exception e) {
-			System.err.println("Entrada invalida!");
+			System.err.println("Entrada inválida!");
 			sc.nextLine();
 		}
     }
 
     public static void telaRemoverBibliotecario() {
         try {
-			System.out.print("Digite a matrícula do bibliotecário a remover: ");
+			System.out.print("Digite a matrícula do bibliotecário a serem removidos: ");
 			Long matricula = sc.nextLong();
 
 			
@@ -557,26 +577,26 @@ public class Telas {
 			if(Biblioteca.removerBibliotecario(matricula)) {
 			    System.out.println("Bibliotecário removido!");
 			} else {
-				System.out.println("Bibliotecário nao encontrado!");
+				System.out.println("Bibliotecário não encontrado!");
 			}
 		} catch (Exception e) {
-			System.err.println("Matricula invalida!");
+			System.err.println("Matrícula inválida!");
 			sc.nextLine();
 		}
     }
 
     public static void telaRemoverCliente() {
         try {
-			System.out.print("Digite o cpf do cliente a remover: ");
+			System.out.print("Digite o cpf do cliente a ser removido: ");
 			Long cpf = sc.nextLong();
 			
 			if(Biblioteca.removerCliente(cpf)) {
 			    System.out.println("Cliente removido!");
 			} else {
-				System.out.println("Cliente nao encontrado!");
+				System.out.println("Cliente não encontrado!");
 			}
 		} catch (Exception e) {
-			System.err.println("Cpf invalido!");
+			System.err.println("Cpf inválido!");
 			sc.nextLine();
 		}
     }
@@ -594,7 +614,7 @@ public class Telas {
 			cpf = sc.nextLong();
 			System.out.print("Digite o id do livro a ser emprestado: ");
 			id = sc.nextLong();
-			System.out.print("Digite o a data do emprestimo (dd/mm/yyyy): ");
+			System.out.print("Digite a data do empréstimo (dd/mm/yyyy): ");
 			data = sc.next();
 			
 			//FORMARTAR DATA DE EMPRESTIMO A PARTIR DA STRING
@@ -606,17 +626,27 @@ public class Telas {
 				
 				//Registrar emprestimo			
 				if(Biblioteca.alugarLivroBiblioteca(cpf, id, date)) {
-					System.out.println("Emprestimo realizado com sucesso!");
-					System.out.println("O cliente tem deve devolver o livro em 14 dias uteis.");
+					
+					Date dataDev;
+					Calendar cal = Calendar.getInstance();
+					cal.setTime(date);
+					cal.add(Calendar.DATE, 14);
+					dataDev = cal.getTime();
+					
+					SimpleDateFormat f1 = new SimpleDateFormat("dd/MM/yyyy");
+			        String dtDevolver = f1.format(dataDev);
+					
+					System.out.println("Empréstimo realizado com sucesso!");
+					System.out.println("O cliente deve devolver o livro até dia " + dtDevolver + ".\n");
 				} else {
-					System.out.println("Falha ao realizar emprestimo.");
+					System.err.println("Falha ao realizar empréstimo.");
 				}
 			}  catch (ParseException e) {
-				System.err.println("Falha ao realizar emprestimo.");
+				System.err.println("Falha ao realizar empréstimo.");
 				sc.nextLine();
 			}
 		} catch (Exception e) {
-			System.err.println("Entrada invalida!");
+			System.err.println("Entrada inválida!");
 			sc.nextLine();
 		}
 
@@ -639,10 +669,10 @@ public class Telas {
 			    System.out.println("Livro devolvido com sucesso!");
 			}
 			else {
-			    System.out.println("Erro ao devolver livro. Dados inválidos!");
+			    System.err.println("Erro ao devolver livro. Dados inválidos!");
 			}
 		} catch (Exception e) {
-			System.err.println("Entrada invalida!");
+			System.err.println("Entrada inválida!");
 			sc.nextLine();
 		}
     }

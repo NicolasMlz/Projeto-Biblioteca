@@ -19,7 +19,7 @@ public class Bibliotecario extends Pessoa {
 	//METODOS
 	@Override
 	public String toString() {
-		return super.toString() + " - Matricula: " + matricula + " - Login: " + login + "\n";
+		return super.toString() + " - Matrícula: " + matricula + " - Login: " + login + "\n";
 	}
 	
 	

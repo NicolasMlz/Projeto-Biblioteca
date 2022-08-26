@@ -22,7 +22,7 @@ public class Cliente extends Pessoa {
 		for(Livro l : livrosAlugados) {
 			livros += l.toStringCliente();
 		}
-		return super.toString() + " - Email: " + email + "\nLivros alugados: \n" + livros + "\n";
+		return super.toString() + " - E-mail: " + email + "\nLivros alugados: \n" + livros + "\n";
 	}
 	public void adicionarLivroAlugado(Livro livro) {
         livrosAlugados.add(livro);

@@ -71,10 +71,10 @@ public class Emprestimo {
         String atrasado;
 
         if(emprestimoAtrasado()) atrasado = "Sim!";
-        else atrasado = "Nao!";
+        else atrasado = "Não!";
 
-        return "Cpf do cliente: " + cpf_cliente + " - Id do livro: " + id_livro + " - Data do emprestimo: "
-                + dtEmprestar + " - Data de devolucao: " + dtDevolver + " - Atrasado? " + atrasado + "\n";
+        return "Cpf do cliente: " + cpf_cliente + " - Id do livro: " + id_livro + " - Data do empréstimo: "
+                + dtEmprestar + " - Data de devolução: " + dtDevolver + " - Atrasado? " + atrasado + "\n";
     }
     
     public boolean emprestimoAtrasado() {
