@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import arquivosTXT.Arquivo;
 import backend.Biblioteca;
 import backend.Bibliotecario;
 import backend.Cliente;
@@ -122,6 +123,7 @@ public class Telas {
             sc.nextLine();
         }
     }
+	
 	private static void telaOpcoesSistema() {
 		
 		//VARIAVEIS
@@ -297,14 +299,19 @@ public class Telas {
 			System.out.print("Digite o id do livro: ");
 			id = sc.nextLong();
 			
-			//Cadastrar novo biblitecario
+			//Cadastrar novo livro
 			Livro novo = new Livro(id, titulo, autor, editora, edicao, genero, qtde);
 			
+			//Salvar no arquivo
+			String arq = "livro.txt";
+			String texto = id+";"+titulo+";"+autor+";"+editora+";"+edicao+";"+genero+";"+qtde+";\r";
+			
 			//Saida
-			if(Biblioteca.adicionarLivroNovo(novo)) {
+			if(Biblioteca.adicionarLivroNovo(novo) && Arquivo.Write(arq, texto)) {
 				System.out.println("Livro cadastrado com sucesso!");
 			} else {
-				System.err.println("Falha ao cadastrar!");
+				System.err.println("Livro já cadastrado!");
+				sc.nextLine();
 			}
 		} catch (Exception e) {
 			System.err.println("Falha ao cadastrar livro!");
@@ -312,6 +319,7 @@ public class Telas {
 		}
 	}	
 
+	//FALTA ARQUIVO
 	private static void telaAdicionarLivroEstoque() {
 		
 		Long id;
@@ -359,8 +367,12 @@ public class Telas {
 			//Cadastrar novo biblitecario
 			Bibliotecario novo = new Bibliotecario(cpf, nome, telefone,  matricula, login, senha);
 			
+			//Salvar no arquivo
+			String arq = "bibliotecario.txt";
+			String texto = cpf+";"+nome+";"+telefone+";"+matricula+";"+login+";"+senha+";\r";
+			
 			//Saida
-			if(Biblioteca.adicionarBibliotecario(novo)) {
+			if(Biblioteca.adicionarBibliotecario(novo) && Arquivo.Write(arq, texto)) {
 				System.out.println("Usuário cadastrado com sucesso!");
 			} else {
 				System.err.println("Falha ao cadastrar!");
@@ -392,8 +404,12 @@ public class Telas {
 			//Cadastrar novo biblitecario
 			Cliente novo = new Cliente(cpf, nome, telefone, email);
 			
+			//Salvar no arquivo
+			String arq = "cliente.txt";
+			String texto = cpf+";"+nome+";"+telefone+";"+email+";\r";
+			
 			//Saida
-			if(Biblioteca.adicionarCliente(novo)) {
+			if(Biblioteca.adicionarCliente(novo) && Arquivo.Write(arq, texto)) {
 				System.out.println("Cliente cadastrado com sucesso!");
 			} else {
 				System.err.println("Falha ao cadastrar!");
@@ -405,6 +421,7 @@ public class Telas {
 		}
 	}	
 	
+	//FALTA ARQUIVO
 	private static void telaAlterarLivro() {
 		
 		Long id;
@@ -449,6 +466,7 @@ public class Telas {
 		
 	}
 	
+	//FALTA ARQUIVO
 	private static void telaAlterarBibliotecario() {
 		
 		Long matricula;
@@ -490,6 +508,7 @@ public class Telas {
 		
 	}
 	
+	//FALTA ARQUIVO
 	private static void telaAlterarCliente() {
 		
 		//Encontrar livro
@@ -528,12 +547,12 @@ public class Telas {
 			System.err.println("Cpf inválido!");
 		}
 	}
-
+	
+	//FALTA ARQUIVO
 	public static void telaRemoverLivroTotal(){
         try {
 			System.out.print("Digite o id do livro: ");
 			Long id = sc.nextLong();
-
 			
 			if(Biblioteca.removerLivroTotal(id)) {
 			    System.out.println("Livro removido!");
@@ -547,6 +566,7 @@ public class Telas {
         
     }
 
+	//FALTA ARQUIVO
     public static void telaRemoverLivroQuantidade() {
         try {
         	
@@ -567,6 +587,7 @@ public class Telas {
 		}
     }
 
+    //FALTA ARQUIVO
     public static void telaRemoverBibliotecario() {
         try {
 			System.out.print("Digite a matrícula do bibliotecário a serem removidos: ");
@@ -584,7 +605,8 @@ public class Telas {
 			sc.nextLine();
 		}
     }
-
+  	
+    //FALTA ARQUIVO
     public static void telaRemoverCliente() {
         try {
 			System.out.print("Digite o cpf do cliente a ser removido: ");
@@ -601,6 +623,7 @@ public class Telas {
 		}
     }
     
+    //FALTA ARQUIVO
     public static void telaEmprestimo() {
     	
     	//Variaveis
@@ -652,6 +675,7 @@ public class Telas {
 
     }
     
+    //FALTA ARQUIVO
     public static void telaDevolucao() {
     	
         //Variaveis

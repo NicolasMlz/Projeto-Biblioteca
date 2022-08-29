@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import arquivosTXT.Arquivo;
 import exceptions.SenhaInvalidaException;
 
 public class Biblioteca {
@@ -140,6 +141,10 @@ public class Biblioteca {
 		for(Livro l : livros) {
 			if(l.getId().equals(id)) {
 				livros.remove(l);
+				String linha = l.getId()+";"+l.getTitulo()+";"+l.getAutor()+";"+l.getEditora()+";"
+							+l.getEdicao()+";"+l.getGenero()+";"+l.getQtdeTotal()+";";
+				Arquivo.Remove("livro.txt", linha);
+				
 				return true;
 			}
 		}	
