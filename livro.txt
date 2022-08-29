@@ -1,0 +1,10 @@
+1;Mémorias do subsolo;Fiódor Dostoiévski;34;6;Ficção;10;
+2;Crime e castigo;Fiódor Dostoiévski;28;7;Ficção;25;
+3;Corte de espinhos e rosas (Vol. 1);Sarah J. Maas;Galera;45;Ficção;15;
+4;Corte de névoa e fúria (Vol. 2);Sarah J. Maas;Galera;46;Ficção;8;
+5;Corte de asas e ruínas (Vol. 3);Sarah J. Maas;Galera;52;Ficção;5;
+6;A paciente silenciosa;Alex Michaelides;Record;27;Thriller;80;
+7;E não sobrou nenhum;Agatha Christie;Globo Livros;4;Suspense e Mistério;36;
+8;O retrato de Doian Gray;Oscar Wilde;Via Leitura;11;Suspense e Mistério;3;
+9;A garota do lago;Charlie Donlea;Faro Editorial;1;Fincção científica;65;
+10;O morro dos ventos uivantes;Emily Bronte;Principis;1;Romance;8;

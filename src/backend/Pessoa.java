@@ -21,26 +21,15 @@ public abstract class Pessoa {
 		return "Nome: " + nome + "\nCpf: " + cpf + " - Telefone: " + telefone;
 	}
 	
-	
 	//GETTER E SETTERS
 	public Long getCpf() {
 		return cpf;
 	}
-
-	public void setCpf(Long cpf) {
-		this.cpf = cpf;
-	}
 	public String getNome() {
 		return nome;
 	}
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
 	public String getTelefone() {
 		return telefone;
-	}
-	public void setTelefone(String telefone) {
-		this.telefone = telefone;
 	}
 	
 }

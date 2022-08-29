@@ -30,19 +30,10 @@ public class Cliente extends Pessoa {
     public void removerLivroAlugado(Livro livro) {
         livrosAlugados.remove(livro);
     }
-	
-	//GETTERS E SETTERS
+    
+    //GET
 	public String getEmail() {
 		return email;
-	}
-	public void setEmail(String email) {
-		this.email = email;
-	}
-	public List<Livro> getLivrosAlugados() {
-		return livrosAlugados;
-	}
-	public void setLivrosAlugados(List<Livro> livrosAlugados) {
-		this.livrosAlugados = livrosAlugados;
 	}
 	
 }

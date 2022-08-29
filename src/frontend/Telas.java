@@ -7,7 +7,7 @@ import java.util.Date;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-import arquivosTXT.Arquivo;
+import arquivoTXT.Arquivo;
 import backend.Biblioteca;
 import backend.Bibliotecario;
 import backend.Cliente;
@@ -303,11 +303,11 @@ public class Telas {
 			Livro novo = new Livro(id, titulo, autor, editora, edicao, genero, qtde);
 			
 			//Salvar no arquivo
-			String arq = "livro.txt";
-			String texto = id+";"+titulo+";"+autor+";"+editora+";"+edicao+";"+genero+";"+qtde+";\r";
+			String texto = id+";"+titulo+";"+autor+";"+editora
+						+";"+edicao+";"+genero+";"+qtde+";";
 			
 			//Saida
-			if(Biblioteca.adicionarLivroNovo(novo) && Arquivo.Write(arq, texto)) {
+			if(Biblioteca.adicionarLivroNovo(novo) && Arquivo.Write("livro.txt", texto)) {
 				System.out.println("Livro cadastrado com sucesso!");
 			} else {
 				System.err.println("Livro já cadastrado!");
@@ -319,7 +319,6 @@ public class Telas {
 		}
 	}	
 
-	//FALTA ARQUIVO
 	private static void telaAdicionarLivroEstoque() {
 		
 		Long id;
@@ -369,10 +368,10 @@ public class Telas {
 			
 			//Salvar no arquivo
 			String arq = "bibliotecario.txt";
-			String texto = cpf+";"+nome+";"+telefone+";"+matricula+";"+login+";"+senha+";\r";
+			String linha = cpf+";"+nome+";"+telefone+";"+matricula+";"+login+";"+senha+";";
 			
 			//Saida
-			if(Biblioteca.adicionarBibliotecario(novo) && Arquivo.Write(arq, texto)) {
+			if(Biblioteca.adicionarBibliotecario(novo) && Arquivo.Write(arq, linha)) {
 				System.out.println("Usuário cadastrado com sucesso!");
 			} else {
 				System.err.println("Falha ao cadastrar!");
@@ -406,7 +405,7 @@ public class Telas {
 			
 			//Salvar no arquivo
 			String arq = "cliente.txt";
-			String texto = cpf+";"+nome+";"+telefone+";"+email+";\r";
+			String texto = cpf+";"+nome+";"+telefone+";"+email+";";
 			
 			//Saida
 			if(Biblioteca.adicionarCliente(novo) && Arquivo.Write(arq, texto)) {
@@ -421,7 +420,6 @@ public class Telas {
 		}
 	}	
 	
-	//FALTA ARQUIVO
 	private static void telaAlterarLivro() {
 		
 		Long id;
@@ -445,8 +443,6 @@ public class Telas {
 				String genero = sc.nextLine();
 				System.out.print("Digite a quantidade de livros: ");
 				int qtde = sc.nextInt();sc.nextLine();
-				System.out.print("Digite o id do livro: ");
-				id = sc.nextLong();
 				
 				//Alterar livro
 				Livro novo = new Livro(id, titulo, autor, editora, edicao, genero, qtde);
@@ -466,7 +462,6 @@ public class Telas {
 		
 	}
 	
-	//FALTA ARQUIVO
 	private static void telaAlterarBibliotecario() {
 		
 		Long matricula;
@@ -484,14 +479,14 @@ public class Telas {
 				System.out.print("Digite o cpf: ");
 				Long cpf = sc.nextLong(); sc.nextLine();
 				System.out.print("Digite a matrícula: ");
-				matricula = sc.nextLong(); sc.nextLine();
+				Long matriculaNova = sc.nextLong(); sc.nextLine();
 				System.out.print("Digite o login: ");
 				String login = sc.nextLine();
 				System.out.print("Digite a senha: ");
 				String senha = sc.nextLine();
 				
 				//Alterar biblitecario
-				Bibliotecario novo = new Bibliotecario(cpf, nome, telefone,  matricula, login, senha);
+				Bibliotecario novo = new Bibliotecario(cpf, nome, telefone,  matriculaNova, login, senha);
 				
 				if(Biblioteca.alterarBibliotecario(matricula, novo)) {
 					System.out.println("Sucesso ao alterar bibliotecário!");
@@ -508,7 +503,6 @@ public class Telas {
 		
 	}
 	
-	//FALTA ARQUIVO
 	private static void telaAlterarCliente() {
 		
 		//Encontrar livro
@@ -527,10 +521,10 @@ public class Telas {
 				System.out.print("Digite o e-mail: ");
 				String email = sc.nextLine();
 				System.out.print("Digite o cpf: ");
-				cpf = sc.nextLong(); sc.nextLine();
+				Long cpfNovo = sc.nextLong(); sc.nextLine();
 				
 				//Alterar livro
-				Cliente novo = new Cliente(cpf, nome, telefone, email);
+				Cliente novo = new Cliente(cpfNovo, nome, telefone, email);
 				Biblioteca.alterarCliente(cpf, novo);
 				
 				if(Biblioteca.alterarCliente(cpf, novo)) {
@@ -548,7 +542,6 @@ public class Telas {
 		}
 	}
 	
-	//FALTA ARQUIVO
 	public static void telaRemoverLivroTotal(){
         try {
 			System.out.print("Digite o id do livro: ");
@@ -566,7 +559,6 @@ public class Telas {
         
     }
 
-	//FALTA ARQUIVO
     public static void telaRemoverLivroQuantidade() {
         try {
         	
@@ -587,7 +579,6 @@ public class Telas {
 		}
     }
 
-    //FALTA ARQUIVO
     public static void telaRemoverBibliotecario() {
         try {
 			System.out.print("Digite a matrícula do bibliotecário a serem removidos: ");
@@ -606,7 +597,6 @@ public class Telas {
 		}
     }
   	
-    //FALTA ARQUIVO
     public static void telaRemoverCliente() {
         try {
 			System.out.print("Digite o cpf do cliente a ser removido: ");

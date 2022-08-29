@@ -1,4 +1,4 @@
-package arquivosTXT;
+package arquivoTXT;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -23,7 +23,7 @@ public class Arquivo {
 	}
 	
 	//Escrever no arquivo
-    public static boolean Write(String Caminho,String Texto){
+    public static boolean Write(String Caminho, String Texto){
         try {
             FileWriter arq = new FileWriter(Caminho, true);
             PrintWriter gravarArq = new PrintWriter(arq);
@@ -142,36 +142,53 @@ public class Arquivo {
 		//Acessar arquivo
 		File arq = new File(Caminho);
 		
+		//Remover instancia do arquivo
 		try {
+			
+			//Ler arquivo
 			FileReader fr = new FileReader(arq);
 			BufferedReader br = new BufferedReader(fr);
 			
+			//Armazenar linha por linha
 			String linha = br.readLine();
+			
+			//Salvar linhas do arquivo em um array
 			ArrayList<String> salvar = new ArrayList<>();
 			
+			//Salvar no array todas as linhas menos a removida
 			while(linha != null) {
-				if(linha != instancia) {
+				if(linha.equals(instancia) == false) {
 					salvar.add(linha);
 				}
 				linha = br.readLine();
 			}
 			
+			//Excluir arquivo
 			br.close();
 			fr.close();
 			FileWriter fw2 = new FileWriter(arq, true);
 			fw2.close();
 			
+			//Criar novo arquivo
 			FileWriter fw = new FileWriter(arq);
 			BufferedWriter bw = new BufferedWriter(fw);
 			
+			//Armazenar array no novo arquivo
 			for(int i=0; i<salvar.size(); i++) {
-				
+				bw.write(salvar.get(i));
+				bw.newLine();
 			}
+			bw.close();
+			fw.close();
 			
 			return true;
+			
 		} catch (IOException e) {
+			
+			//Tratar excessao
 			e.printStackTrace();
 			return false;
 		}
     }
+
 }

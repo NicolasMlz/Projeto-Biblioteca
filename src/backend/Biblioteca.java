@@ -4,8 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import arquivosTXT.Arquivo;
-import exceptions.SenhaInvalidaException;
+import arquivoTXT.Arquivo;
 
 public class Biblioteca {
 	
@@ -94,12 +93,14 @@ public class Biblioteca {
 	}
 
 	public static boolean adicionarLivroNovo(Livro livro) {
+		
 		for(Livro l : livros) {
 			if(l.getId().equals(livro.getId())) {
 				return false;
 			}
 		}	
 		
+		//Salvar no array
 		livros.add(livro);	
 		return true;
 	}
@@ -107,7 +108,20 @@ public class Biblioteca {
 	public static boolean adicionarLivroQtde(Long id, int qtde) {
 		for(Livro l : livros) {
 			if(l.getId().equals(id)) {
+				
+				//Remover livro do arquivo
+				String linha = l.getId()+";"+l.getTitulo()+";"+l.getAutor()+";"+l.getEditora()+";"
+						+l.getEdicao()+";"+l.getGenero()+";"+l.getQtdeTotal()+";";
+				Arquivo.Remove("livro.txt", linha);
+				
+				//Atualizar livro
 				l.atualizarQtde(qtde);
+				
+				//REescrever no arquivo
+				linha = l.getId()+";"+l.getTitulo()+";"+l.getAutor()+";"+l.getEditora()+";"
+						+l.getEdicao()+";"+l.getGenero()+";"+l.getQtdeTotal()+";";
+				Arquivo.Write("livro.txt", linha);
+				
 				return true;
 			}
 		}
@@ -121,7 +135,6 @@ public class Biblioteca {
 				return false;
 			}
 		}	
-		
 		clientes.add(cliente);
 		return true;
 	}
@@ -130,6 +143,11 @@ public class Biblioteca {
 		for(Bibliotecario b : bibliotecarios) {
 			if(b.getMatricula().equals(matricula)) {
 				bibliotecarios.remove(b);
+				
+				//Passar a linha como parametro para remocao
+				String linha = b.getCpf()+";"+b.getNome()+";"+b.getTelefone()+";"+b.getMatricula()+";"+b.getLogin()+";"+b.getSenha()+";";
+				Arquivo.Remove("bibliotecario.txt", linha);
+				
 				return true;
 			}
 		}	
@@ -140,11 +158,13 @@ public class Biblioteca {
 	public static boolean removerLivroTotal(Long id) {
 		for(Livro l : livros) {
 			if(l.getId().equals(id)) {
-				livros.remove(l);
+				
+				//Passar a linha como parametro para remocao
 				String linha = l.getId()+";"+l.getTitulo()+";"+l.getAutor()+";"+l.getEditora()+";"
 							+l.getEdicao()+";"+l.getGenero()+";"+l.getQtdeTotal()+";";
 				Arquivo.Remove("livro.txt", linha);
 				
+				livros.remove(l);
 				return true;
 			}
 		}	
@@ -155,12 +175,25 @@ public class Biblioteca {
 	public static boolean removerLivroParcial(Long id, int qtde) {
 		for(Livro l : livros) {
 			if(l.getId().equals(id)) {
-				if((l.getQtdeTotal() - l.getQtdeDisponiveis()) <= qtde) 
-					qtde = (l.getQtdeTotal() - l.getQtdeDisponiveis()) * -1;
+				if(l.getQtdeDisponiveis() <= qtde) 
+					qtde =  l.getQtdeDisponiveis() * (-1);
 				else 
 					qtde *= -1;
+			
 				
+				//Remover livro do arquivo
+				String linha = l.getId()+";"+l.getTitulo()+";"+l.getAutor()+";"+l.getEditora()+";"
+						+l.getEdicao()+";"+l.getGenero()+";"+l.getQtdeTotal()+";";
+				Arquivo.Remove("livro.txt", linha);
+				
+				//Atualizar livro
 				l.atualizarQtde(qtde);
+				
+				//REescrever no arquivo
+				linha = l.getId()+";"+l.getTitulo()+";"+l.getAutor()+";"+l.getEditora()+";"
+						+l.getEdicao()+";"+l.getGenero()+";"+l.getQtdeTotal()+";";
+				Arquivo.Write("livro.txt", linha);
+				
 				return true;
 			}
 		}
@@ -172,6 +205,11 @@ public class Biblioteca {
 		for(Cliente c : clientes) {
 			if(c.getCpf().equals(cpf)) {
 				clientes.remove(c);
+				
+				//Passar a linha como parametro para remocao
+				String linha = c.getCpf()+";"+c.getNome()+";"+c.getTelefone()+";"+c.getEmail()+";";
+				Arquivo.Remove("cliente.txt", linha);
+				
 				return true;
 			}
 		}	
@@ -182,9 +220,10 @@ public class Biblioteca {
 	public static boolean alterarBibliotecario(Long matricula, Bibliotecario b) {
 		
 		if(removerBibliotecario(matricula)) {
-			removerBibliotecario(matricula);
 			if(adicionarBibliotecario(b)) {
-				adicionarBibliotecario(b);
+				//Passar a linha como parametro para remocao
+				String linha = b.getCpf()+";"+b.getNome()+";"+b.getTelefone()+";"+b.getMatricula()+";"+b.getLogin()+";"+b.getSenha()+";";
+				Arquivo.Write("bibliotecario.txt", linha);
 				return true;
 			}
 		}
@@ -192,12 +231,13 @@ public class Biblioteca {
 		return false;
 	}
 
-	public static boolean alterarCliente(Long cpf, Cliente cliente) {
+	public static boolean alterarCliente(Long cpf, Cliente c) {
 		
 		if(removerCliente(cpf)) {
-			removerCliente(cpf);
-			if(adicionarCliente(cliente)) {
-				adicionarCliente(cliente);
+			if(adicionarCliente(c)) {
+				//Passar a linha como parametro para remocao
+				String linha = c.getCpf()+";"+c.getNome()+";"+c.getTelefone()+";"+c.getEmail()+";";
+				Arquivo.Write("cliente.txt", linha);
 				return true;
 			}
 		}
@@ -208,9 +248,11 @@ public class Biblioteca {
 	public static boolean alterarLivro(Long id, Livro livro) {
 		
 		if(removerLivroTotal(id)) {
-			removerLivroTotal(id);
 			if(adicionarLivroNovo(livro)) {
-				adicionarLivroNovo(livro);
+				
+				String linha = livro.getId()+";"+livro.getTitulo()+";"+livro.getAutor()+";"+livro.getEditora()+";"
+						+livro.getEdicao()+";"+livro.getGenero()+";"+livro.getQtdeTotal()+";";
+				Arquivo.Write("livro.txt", linha);
 				return true;
 			}
 		}
@@ -294,6 +336,7 @@ public class Biblioteca {
 		
 		return t;		
 	}
+	
 	public static List<Bibliotecario> getBibliotecarios() {
         return bibliotecarios;
     }

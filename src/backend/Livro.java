@@ -26,7 +26,8 @@ public class Livro {
 	
 	//METODOS
 	void atualizarQtde(int qtde) {
-		this.qtdeTotal += qtde;
+		this.qtdeTotal = qtdeTotal + qtde;
+		this.qtdeDisponiveis = qtdeDisponiveis + qtde;
 	}
 	@Override
 	public String toString() {
@@ -42,44 +43,23 @@ public class Livro {
 	public Long getId() {
 		return id;
 	}
-	public void setId(Long id) {
-		this.id = id;
-	}
 	public String getTitulo() {
 		return titulo;
-	}
-	public void setTitulo(String titulo) {
-		this.titulo = titulo;
 	}
 	public String getAutor() {
 		return autor;
 	}
-	public void setAutor(String autor) {
-		this.autor = autor;
-	}
 	public String getEditora() {
 		return editora;
-	}
-	public void setEditora(String editora) {
-		this.editora = editora;
 	}
 	public int getEdicao() {
 		return edicao;
 	}
-	public void setEdicao(int edicao) {
-		this.edicao = edicao;
-	}
 	public String getGenero() {
 		return genero;
 	}
-	public void setGenero(String genero) {
-		this.genero = genero;
-	}
 	public int getQtdeTotal() {
 		return qtdeTotal;
-	}
-	public void setQtdeTotal(int qtdeTotal) {
-		this.qtdeTotal = qtdeTotal;
 	}
 	public int getQtdeDisponiveis() {
 		return qtdeDisponiveis;
