@@ -67,5 +67,9 @@ public class Livro {
 	public void setQtdeDisponiveis(int qtdeDisponiveis) {
 		this.qtdeDisponiveis = qtdeDisponiveis;
 	}
+	public void setQtdeTotal(int qtdeTotal) {
+		this.qtdeTotal = qtdeTotal;
+	}
+	
 	
 }

@@ -13,7 +13,7 @@ public class Biblioteca {
 	static List<Bibliotecario> bibliotecarios = new ArrayList<>();
 	static List<Emprestimo> emprestimos = new ArrayList<>();
 	static List<Cliente> clientes = new ArrayList<>();
-	static List<Livro> livros = new ArrayList<>();
+	private static List<Livro> livros = new ArrayList<>();
 	
 	
 	//CONSTRUTOR
@@ -106,19 +106,19 @@ public class Biblioteca {
 
 	public static boolean adicionarLivroNovo(Livro livro) {
 		
-		for(Livro l : livros) {
+		for(Livro l : getLivros()) {
 			if(l.getId().equals(livro.getId())) {
 				return false;
 			}
 		}	
 		
 		//Salvar no array
-		livros.add(livro);	
+		getLivros().add(livro);	
 		return true;
 	}
 
 	public static boolean adicionarLivroQtde(Long id, int qtde) {
-		for(Livro l : livros) {
+		for(Livro l : getLivros()) {
 			if(l.getId().equals(id)) {
 				
 				//Remover livro do arquivo
@@ -168,7 +168,7 @@ public class Biblioteca {
 	}
 
 	public static boolean removerLivroTotal(Long id) {
-		for(Livro l : livros) {
+		for(Livro l : getLivros()) {
 			if(l.getId().equals(id)) {
 				
 				//Passar a linha como parametro para remocao
@@ -176,7 +176,7 @@ public class Biblioteca {
 							+l.getEdicao()+";"+l.getGenero()+";"+l.getQtdeTotal()+";";
 				Arquivo.Remove("livro.txt", linha);
 				
-				livros.remove(l);
+				getLivros().remove(l);
 				return true;
 			}
 		}	
@@ -185,7 +185,7 @@ public class Biblioteca {
 	}
 
 	public static boolean removerLivroParcial(Long id, int qtde) {
-		for(Livro l : livros) {
+		for(Livro l : getLivros()) {
 			if(l.getId().equals(id)) {
 				if(l.getQtdeDisponiveis() <= qtde) 
 					qtde =  l.getQtdeDisponiveis() * (-1);
@@ -259,6 +259,7 @@ public class Biblioteca {
 
 	public static boolean alterarLivro(Long id, Livro livro) {
 		
+		
 		if(removerLivroTotal(id)) {
 			if(adicionarLivroNovo(livro)) {
 				
@@ -273,7 +274,7 @@ public class Biblioteca {
 	}
 
 	public static String consultarLivroUnico(Long id) {
-		for(Livro l : livros) {
+		for(Livro l : getLivros()) {
 			if(l.getId().equals(id)) {
 				return l.toString();
 			}
@@ -283,7 +284,7 @@ public class Biblioteca {
 	}
 	
 	public static String consultarLivroUnico(String nome) {
-		for(Livro l : livros) {
+		for(Livro l : getLivros()) {
 			if(l.getTitulo().equalsIgnoreCase(nome)) {
 				return l.toString();
 			}
@@ -296,7 +297,7 @@ public class Biblioteca {
 		
 		String t = "";
 		
-		for(Livro l : livros) {
+		for(Livro l : getLivros()) {
 			t += l.toString() + "\n";
 		}
 		
@@ -348,4 +349,11 @@ public class Biblioteca {
 	public static List<Bibliotecario> getBibliotecarios() {
         return bibliotecarios;
     }
+
+
+	public static List<Livro> getLivros() {
+		return livros;
+	}
+
+
 }

@@ -380,11 +380,11 @@ public class Telas {
 			for(Bibliotecario l : Biblioteca.getBibliotecarios()) {
                 if(l.getMatricula().equals(matricula)) {
                     System.err.println("Erro! Matrícula já existente.");
-                    telaPrincipal(); 
+                    telaOpcoesSistema(); 
                 }
                 else if(l.getLogin().equals(login)) {
                     System.err.println("Erro! Usuário já existente.");
-                    telaPrincipal();
+                    telaOpcoesSistema();
                 }
             }
 			
@@ -466,11 +466,17 @@ public class Telas {
 				String editora= sc.nextLine();
 				System.out.print("Digite o gênero: ");
 				String genero = sc.nextLine();
-				System.out.print("Digite a quantidade de livros: ");
-				int qtde = sc.nextInt();sc.nextLine();
 				
 				//Alterar livro
-				Livro novo = new Livro(id, titulo, autor, editora, edicao, genero, qtde);
+				int qtdeTotal=0;
+				for(Livro l : Biblioteca.getLivros()) {
+					if(l.getId() == id) {
+						qtdeTotal = l.getQtdeTotal();
+						break;
+					}
+				}
+				Livro novo = new Livro(id, titulo, autor, editora, edicao, genero, qtdeTotal);
+				
 				if(Biblioteca.alterarLivro(id, novo)) {
 					System.out.println("Livro alterado com sucesso!");
 				} else {

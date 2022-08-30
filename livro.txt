@@ -1,4 +1,3 @@
-1;Mémorias do subsolo;Fiódor Dostoiévski;34;6;Ficção;10;
 2;Crime e castigo;Fiódor Dostoiévski;28;7;Ficção;25;
 3;Corte de espinhos e rosas (Vol. 1);Sarah J. Maas;Galera;45;Ficção;15;
 4;Corte de névoa e fúria (Vol. 2);Sarah J. Maas;Galera;46;Ficção;8;
@@ -8,3 +7,4 @@
 8;O retrato de Doian Gray;Oscar Wilde;Via Leitura;11;Suspense e Mistério;3;
 9;A garota do lago;Charlie Donlea;Faro Editorial;1;Fincção científica;65;
 10;O morro dos ventos uivantes;Emily Bronte;Principis;1;Romance;8;
+1;O Alienista;Machado de Assis;Companhia das Letras;4;Romance;22;

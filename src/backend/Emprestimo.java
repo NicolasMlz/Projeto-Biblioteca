@@ -39,7 +39,7 @@ public class Emprestimo {
                 return false;
         }
 		
-        for(Livro l : Biblioteca.livros) {
+        for(Livro l : Biblioteca.getLivros()) {
             if(l.getId().equals(this.id_livro)) {
                 for(Cliente c : Biblioteca.clientes) {
                     if(c.getCpf().equals(this.cpf_cliente)) {
@@ -55,7 +55,7 @@ public class Emprestimo {
     }
 	
     public boolean devolverLivro() {
-        for( Livro l : Biblioteca.livros) {
+        for( Livro l : Biblioteca.getLivros()) {
             if(l.getId().equals(this.id_livro)) {
                 for(Cliente c : Biblioteca.clientes) {
                     if(c.getCpf().equals(this.cpf_cliente)) {
