@@ -9,6 +9,7 @@ public class Principal {
 		Arquivo.ReadLivro("livro.txt");
 		Arquivo.ReadCliente("cliente.txt");
 		Arquivo.ReadBibliotecario("bibliotecario.txt");
+		Arquivo.ReadEmprestimo("emprestimo.txt");
         
         //Sistema
         Telas.telaPrincipal();

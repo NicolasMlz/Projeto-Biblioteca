@@ -42,6 +42,7 @@ public class Emprestimo {
                 }
             }
         }
+        
         return false;
     }
 	
@@ -69,12 +70,18 @@ public class Emprestimo {
         String dtEmprestar = f1.format(dataEmprestimo);
 
         String atrasado;
+        String devolvido;
+        
+        if(livroDevolvido == true) 
+        	devolvido = "devolvido";
+        else 
+        	devolvido = "não devolvido";
 
-        if(emprestimoAtrasado()) atrasado = "Sim!";
-        else atrasado = "Não!";
+        if(emprestimoAtrasado()) atrasado = "Atrasado";
+        else atrasado = "No prazo";
 
         return "Cpf do cliente: " + cpf_cliente + " - Id do livro: " + id_livro + " - Data do empréstimo: "
-                + dtEmprestar + " - Data de devolução: " + dtDevolver + " - Atrasado? " + atrasado + "\n";
+                + dtEmprestar + " - Data de devolução: " + dtDevolver + " - " + atrasado + " e " + devolvido + "\n";
     }
     
     public boolean emprestimoAtrasado() {

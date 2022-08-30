@@ -237,6 +237,7 @@ public class Telas {
 				System.out.print("Digite o nome do livro desejado: ");
 				nome = sc.next();
 				System.out.println(Biblioteca.consultarLivroUnico(nome));
+				sc.nextLine();
 			} else {
 				System.out.print("Digite o id do livro desejado: ");
 				id = sc.nextLong();
@@ -637,8 +638,11 @@ public class Telas {
 				//Instanciar data 
 				Date date = formatter.parse(data);
 				
+				//Adicionar no arquivo
+	            String linha = cpf+";"+id+";"+data+";\n";
+	            
 				//Registrar emprestimo			
-				if(Biblioteca.alugarLivroBiblioteca(cpf, id, date)) {
+				if(Biblioteca.alugarLivroBiblioteca(cpf, id, date) && Arquivo.Write("emprestimo.txt", linha)) {
 					
 					Date dataDev;
 					Calendar cal = Calendar.getInstance();
@@ -651,6 +655,7 @@ public class Telas {
 					
 					System.out.println("Empréstimo realizado com sucesso!");
 					System.out.println("O cliente deve devolver o livro até dia " + dtDevolver + ".\n");
+					
 				} else {
 					System.err.println("Falha ao realizar empréstimo.");
 				}

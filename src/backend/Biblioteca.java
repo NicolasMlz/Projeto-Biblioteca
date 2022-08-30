@@ -63,6 +63,8 @@ public class Biblioteca {
         for(Emprestimo e : emprestimos) {
             if(e.getCpf_cliente().equals(cpf_cliente) && e.getId_livro().equals(id_livro)) {
                 e.devolverLivro();
+                //Adicionar no arquivo
+	            String linha = e.getCpf_cliente()+";"+e.getId_livro()+";"+e.getDataDevolucao()+";\n";
                 return true;
             }
         }
@@ -272,16 +274,13 @@ public class Biblioteca {
 	
 	public static String consultarLivroUnico(String nome) {
 		
-		String todos = "";
-		
 		for(Livro l : livros) {
-			if(l.getTitulo().equals(nome)) {
-				todos += l.toString();
-				todos+="\n";
+			if(l.getTitulo().equalsIgnoreCase(nome)) {
+				return l.toString();
 			}
 		}	
 		
-		return todos;
+		return "Livro não cadastrado!\n";
 	}
 
 	public static String consultarLivrosTotais() {

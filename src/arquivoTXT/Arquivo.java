@@ -8,7 +8,10 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import backend.Biblioteca;
 import backend.Bibliotecario;
@@ -36,6 +39,61 @@ public class Arquivo {
         }
     }
 	
+    //Remover arquivo
+    public static boolean Remove(String Caminho,  String instancia){
+    	
+		//Acessar arquivo
+		File arq = new File(Caminho);
+		
+		//Remover instancia do arquivo
+		try {
+			
+			//Ler arquivo
+			FileReader fr = new FileReader(arq);
+			BufferedReader br = new BufferedReader(fr);
+			
+			//Armazenar linha por linha
+			String linha = br.readLine();
+			
+			//Salvar linhas do arquivo em um array
+			ArrayList<String> salvar = new ArrayList<>();
+			
+			//Salvar no array todas as linhas menos a removida
+			while(linha != null) {
+				if(linha.equals(instancia) == false) {
+					salvar.add(linha);
+				}
+				linha = br.readLine();
+			}
+			
+			//Excluir arquivo
+			br.close();
+			fr.close();
+			FileWriter fw2 = new FileWriter(arq, true);
+			fw2.close();
+			
+			//Criar novo arquivo
+			FileWriter fw = new FileWriter(arq);
+			BufferedWriter bw = new BufferedWriter(fw);
+			
+			//Armazenar array no novo arquivo
+			for(int i=0; i<salvar.size(); i++) {
+				bw.write(salvar.get(i));
+				bw.newLine();
+			}
+			bw.close();
+			fw.close();
+			
+			return true;
+			
+		} catch (IOException e) {
+			
+			//Tratar excessao
+			e.printStackTrace();
+			return false;
+		}
+    }
+    
     //Ler o arquivo
     public static String ReadLivro(String Caminho){
         String conteudo = "";
@@ -135,60 +193,38 @@ public class Arquivo {
             return "";
         }
     }
-
-    //Remover arquivo
-    public static boolean Remove(String Caminho,  String instancia){
-    	
-		//Acessar arquivo
-		File arq = new File(Caminho);
-		
-		//Remover instancia do arquivo
-		try {
-			
-			//Ler arquivo
-			FileReader fr = new FileReader(arq);
-			BufferedReader br = new BufferedReader(fr);
-			
-			//Armazenar linha por linha
-			String linha = br.readLine();
-			
-			//Salvar linhas do arquivo em um array
-			ArrayList<String> salvar = new ArrayList<>();
-			
-			//Salvar no array todas as linhas menos a removida
-			while(linha != null) {
-				if(linha.equals(instancia) == false) {
-					salvar.add(linha);
-				}
-				linha = br.readLine();
-			}
-			
-			//Excluir arquivo
-			br.close();
-			fr.close();
-			FileWriter fw2 = new FileWriter(arq, true);
-			fw2.close();
-			
-			//Criar novo arquivo
-			FileWriter fw = new FileWriter(arq);
-			BufferedWriter bw = new BufferedWriter(fw);
-			
-			//Armazenar array no novo arquivo
-			for(int i=0; i<salvar.size(); i++) {
-				bw.write(salvar.get(i));
-				bw.newLine();
-			}
-			bw.close();
-			fw.close();
-			
-			return true;
-			
-		} catch (IOException e) {
-			
-			//Tratar excessao
-			e.printStackTrace();
-			return false;
-		}
-    }
-
+    public static String ReadEmprestimo(String Caminho){
+        String conteudo = "";
+        try {
+            FileReader arq = new FileReader(Caminho);
+            BufferedReader lerArq = new BufferedReader(arq);
+            String linha="";
+            int i=0;
+            try {
+                linha = lerArq.readLine();
+                while(linha!=null){
+                    conteudo += linha;
+                    
+                    Long idCliente = Long.parseLong(conteudo.split(";")[i]); i++;
+                    Long idLivro = Long.parseLong(conteudo.split(";")[i]); i++;
+                    String data = conteudo.split(";")[i]; i++;
+                    
+                    SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+                    Date date = formatter.parse(data);
+                    Biblioteca.alugarLivroBiblioteca(idCliente, idLivro, date);
+                    
+                    linha = lerArq.readLine();
+                }
+                arq.close();
+                return conteudo;
+            } catch (IOException | ParseException ex) {
+                System.out.println("Erro: Não foi possível ler o arquivo!");
+                return "";
+            }
+        } catch (FileNotFoundException ex) {
+            System.out.println("Erro: Arquivo não encontrado!");
+            return "";
+        }
+    }    
+    
 }
