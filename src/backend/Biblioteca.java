@@ -131,7 +131,7 @@ public class Biblioteca {
 				
 				//REescrever no arquivo
 				linha = l.getId()+";"+l.getTitulo()+";"+l.getAutor()+";"+l.getEditora()+";"
-						+l.getEdicao()+";"+l.getGenero()+";"+l.getQtdeTotal()+";";
+						+l.getEdicao()+";"+l.getGenero()+";"+l.getQtdeTotal()+";\n";
 				Arquivo.Write("livro.txt", linha);
 				
 				return true;

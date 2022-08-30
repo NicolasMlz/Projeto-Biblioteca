@@ -31,7 +31,15 @@ public class Emprestimo {
 	
 	//METODOS
 	public boolean alugarLivro() {
-        for( Livro l : Biblioteca.livros) {
+		
+		for(Emprestimo e : Biblioteca.emprestimos) {
+            if(e.getCpf_cliente().equals(this.cpf_cliente) && 
+                e.getId_livro().equals(this.id_livro) && !e.isLivroDevolvido())
+
+                return false;
+        }
+		
+        for(Livro l : Biblioteca.livros) {
             if(l.getId().equals(this.id_livro)) {
                 for(Cliente c : Biblioteca.clientes) {
                     if(c.getCpf().equals(this.cpf_cliente)) {

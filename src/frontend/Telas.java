@@ -43,6 +43,8 @@ public class Telas {
 				//CADASTRE-SE
 				else if(escolha == 2) {
 					telaCadastro();
+				} else {
+					System.err.println("Opãço inválida!");
 				}
 			}
 			
@@ -161,8 +163,8 @@ public class Telas {
 				System.out.println("(17) Remover cliente");
 				System.out.println("(18) REGISTRAR EMPRÉSTIMO DO LIVRO (CLIENTE)");
 				System.out.println("(19) REGISTRAR DEVOLUÇÃO DO LIVRO (CLIENTE)");
-				System.out.println("(20) CONSULTAR EMPRESTIMOS PENDENTES");
-				System.out.println("(21) CONSULTAR EMPRESTIMOS ATRASADOS");
+				System.out.println("(20) CONSULTAR TODOS OS EMPRÉSTIMOS");
+				System.out.println("(21) CONSULTAR EMPRÉSTIMOS ATRASADOS");
 				System.out.println("--------------------------------------------");
 				System.out.print("Sua escolha: ");
 				
@@ -241,14 +243,18 @@ public class Telas {
 			escolhaAux = sc.nextInt();
 			
 			if(escolhaAux == 1) {
-				System.out.print("Digite o nome do livro desejado: ");
-				nome = sc.next();
-				System.out.println(Biblioteca.consultarLivroUnico(nome));
 				sc.nextLine();
-			} else {
+				System.out.print("Digite o nome do livro desejado: ");
+				nome = sc.nextLine();
+				System.out.println(Biblioteca.consultarLivroUnico(nome));
+				
+			} else if(escolhaAux == 2){
 				System.out.print("Digite o id do livro desejado: ");
 				id = sc.nextLong();
 				System.out.println(Biblioteca.consultarLivroUnico(id));
+			} else {
+				System.err.println("Opção inválida");
+				sc.nextLine();
 			}
 		} catch (Exception e) {
 			System.err.println("Opcao invalida!");
@@ -312,7 +318,7 @@ public class Telas {
 			
 			//Salvar no arquivo
 			String texto = id+";"+titulo+";"+autor+";"+editora
-						+";"+edicao+";"+genero+";"+qtde+";";
+						+";"+edicao+";"+genero+";"+qtde+";\n";
 			
 			//Saida
 			if(Biblioteca.adicionarLivroNovo(novo) && Arquivo.Write("livro.txt", texto)) {
@@ -371,12 +377,23 @@ public class Telas {
 			System.out.print("Digite a senha: ");
 			senha = sc.nextLine();
 			
+			for(Bibliotecario l : Biblioteca.getBibliotecarios()) {
+                if(l.getMatricula().equals(matricula)) {
+                    System.err.println("Erro! Matrícula já existente.");
+                    telaPrincipal(); 
+                }
+                else if(l.getLogin().equals(login)) {
+                    System.err.println("Erro! Usuário já existente.");
+                    telaPrincipal();
+                }
+            }
+			
 			//Cadastrar novo biblitecario
 			Bibliotecario novo = new Bibliotecario(cpf, nome, telefone,  matricula, login, senha);
 			
 			//Salvar no arquivo
 			String arq = "bibliotecario.txt";
-			String linha = cpf+";"+nome+";"+telefone+";"+matricula+";"+login+";"+senha+";";
+			String linha = cpf+";"+nome+";"+telefone+";"+matricula+";"+login+";"+senha+";\n";
 			
 			//Saida
 			if(Biblioteca.adicionarBibliotecario(novo) && Arquivo.Write(arq, linha)) {
@@ -413,7 +430,7 @@ public class Telas {
 			
 			//Salvar no arquivo
 			String arq = "cliente.txt";
-			String texto = cpf+";"+nome+";"+telefone+";"+email+";";
+			String texto = cpf+";"+nome+";"+telefone+";"+email+";\n";
 			
 			//Saida
 			if(Biblioteca.adicionarCliente(novo) && Arquivo.Write(arq, texto)) {
@@ -648,8 +665,9 @@ public class Telas {
 	            String linha = cpf+";"+id+";"+data+";false;\n";
 	            
 				//Registrar emprestimo			
-				if(Biblioteca.alugarLivroBiblioteca(cpf, id, date, false) && Arquivo.Write("emprestimo.txt", linha)) {
+				if(Biblioteca.alugarLivroBiblioteca(cpf, id, date, false)) {
 					
+					Arquivo.Write("emprestimo.txt", linha);
 					Date dataDev;
 					Calendar cal = Calendar.getInstance();
 					cal.setTime(date);
@@ -664,6 +682,7 @@ public class Telas {
 					
 				} else {
 					System.err.println("Falha ao realizar empréstimo.");
+					sc.nextLine();
 				}
 			}  catch (ParseException e) {
 				System.err.println("Falha ao realizar empréstimo.");
