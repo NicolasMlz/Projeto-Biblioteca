@@ -208,10 +208,15 @@ public class Arquivo {
                     Long idCliente = Long.parseLong(conteudo.split(";")[i]); i++;
                     Long idLivro = Long.parseLong(conteudo.split(";")[i]); i++;
                     String data = conteudo.split(";")[i]; i++;
+                    String bool = conteudo.split(";")[i]; i++;
+                    
+                    boolean livroDevolvido ;
+                    if (bool.equals("true")) livroDevolvido = true;
+                    else livroDevolvido = false;
                     
                     SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
                     Date date = formatter.parse(data);
-                    Biblioteca.alugarLivroBiblioteca(idCliente, idLivro, date);
+                    Biblioteca.alugarLivroBiblioteca(idCliente, idLivro, date, livroDevolvido);
                     
                     linha = lerArq.readLine();
                 }

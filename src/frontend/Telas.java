@@ -56,28 +56,35 @@ public class Telas {
 		}
 	}
 	
-	private static void telaLogin() throws SenhaInvalidaException{
-		
-		//Variaveis 
-		String login;
-		String senha;
-		
-		//Login e senha
-		System.out.print("Login: ");
-		login = sc.nextLine();
-		System.out.print("Senha: ");
-		senha = sc.nextLine();
-		
-		//Condicao de entrada
-		if(Biblioteca.loginCorreto(login, senha)) {
-			System.out.println("Login efetuado com sucesso!");
-			telaOpcoesSistema();
-		} else {
-			throw new SenhaInvalidaException("Senha Inválida Exception!\nTente novamente.\n");
-		}
+	private static void telaLogin(){
 
-		
-	}
+        //Variaveis 
+        String login;
+        String senha;
+
+        //Login e senha
+        System.out.print("Login: ");
+        login = sc.nextLine();
+        System.out.print("Senha: ");
+        senha = sc.nextLine();
+
+        //Condicao de entrada
+        try{
+            exeption(login, senha);
+
+        } catch(SenhaInvalidaException e) {
+            System.err.println(e.getMessage());
+            telaLogin();
+        }
+    }
+	
+	private static void exeption(String login, String senha) throws SenhaInvalidaException{
+        if(Biblioteca.loginCorreto(login, senha)) {
+            System.out.println("Login efetuado com sucesso!");
+            telaOpcoesSistema();
+        }
+        else throw new SenhaInvalidaException("Senha Inválida Exception!\nTente novamente.\n");
+    }
 	
 	private static void telaCadastro() {
         try {
@@ -614,7 +621,6 @@ public class Telas {
 		}
     }
     
-    //FALTA ARQUIVO
     public static void telaEmprestimo() {
     	
     	//Variaveis
@@ -639,10 +645,10 @@ public class Telas {
 				Date date = formatter.parse(data);
 				
 				//Adicionar no arquivo
-	            String linha = cpf+";"+id+";"+data+";\n";
+	            String linha = cpf+";"+id+";"+data+";false;\n";
 	            
 				//Registrar emprestimo			
-				if(Biblioteca.alugarLivroBiblioteca(cpf, id, date) && Arquivo.Write("emprestimo.txt", linha)) {
+				if(Biblioteca.alugarLivroBiblioteca(cpf, id, date, false) && Arquivo.Write("emprestimo.txt", linha)) {
 					
 					Date dataDev;
 					Calendar cal = Calendar.getInstance();
@@ -678,6 +684,7 @@ public class Telas {
 
         //Dados iniciais
         try {
+        	
 			sc.nextLine();
 			System.out.print("Digite o cpf do cliente: ");
 			cpf = sc.nextLong();

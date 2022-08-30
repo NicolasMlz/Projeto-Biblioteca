@@ -1,5 +1,6 @@
 package backend;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -46,9 +47,9 @@ public class Biblioteca {
 		return resultado;		
 	}
 	
-	public static boolean alugarLivroBiblioteca(Long cpf_cliente, Long id_livro, Date dataEmprestimo) {
+	public static boolean alugarLivroBiblioteca(Long cpf_cliente, Long id_livro, Date dataEmprestimo, boolean ldev) {
 		
-        Emprestimo e = new Emprestimo(cpf_cliente, id_livro, dataEmprestimo);
+        Emprestimo e = new Emprestimo(cpf_cliente, id_livro, dataEmprestimo, ldev);
 
         if(e.alugarLivro()) {
             emprestimos.add(e);
@@ -62,9 +63,18 @@ public class Biblioteca {
 
         for(Emprestimo e : emprestimos) {
             if(e.getCpf_cliente().equals(cpf_cliente) && e.getId_livro().equals(id_livro)) {
+            	
                 e.devolverLivro();
+                
                 //Adicionar no arquivo
-	            String linha = e.getCpf_cliente()+";"+e.getId_livro()+";"+e.getDataDevolucao()+";\n";
+                SimpleDateFormat f1 = new SimpleDateFormat("dd/MM/yyyy");
+		        String dataFormatada = f1.format(e.getDataEmprestimo());
+	           
+		        String linha = e.getCpf_cliente()+";"+e.getId_livro()+";"+dataFormatada+";"+"false"+";";
+	            Arquivo.Remove("emprestimo.txt", linha);
+	            linha = e.getCpf_cliente()+";"+e.getId_livro()+";"+dataFormatada+";"+"true"+";";
+	            Arquivo.Write("emprestimo.txt", linha);
+	            
                 return true;
             }
         }
@@ -273,7 +283,6 @@ public class Biblioteca {
 	}
 	
 	public static String consultarLivroUnico(String nome) {
-		
 		for(Livro l : livros) {
 			if(l.getTitulo().equalsIgnoreCase(nome)) {
 				return l.toString();

@@ -14,11 +14,12 @@ public class Emprestimo {
 	private boolean livroDevolvido;
 	
 	//CONSTRUTOR
-	public Emprestimo(Long cpf_cliente, Long id_livro, Date dataEmprestimo) {
+	public Emprestimo(Long cpf_cliente, Long id_livro, Date dataEmprestimo, boolean livroDevolvido) {
 		super();
 		this.cpf_cliente = cpf_cliente;
 		this.id_livro = id_livro;
 		this.dataEmprestimo = dataEmprestimo;
+		this.livroDevolvido = livroDevolvido;
 		
 		//DEFINIR DATA DE DEVOLUCAO
 		Calendar cal = Calendar.getInstance();
@@ -36,7 +37,6 @@ public class Emprestimo {
                     if(c.getCpf().equals(this.cpf_cliente)) {
                         l.setQtdeDisponiveis(l.getQtdeDisponiveis() - 1);
                         c.adicionarLivroAlugado(l);
-                        setLivroDevolvido(false);
                         return true;
                     }
                 }
@@ -85,7 +85,7 @@ public class Emprestimo {
     }
     
     public boolean emprestimoAtrasado() {
-    	if(livroDevolvido == false && dataDevolucao.before(new Date())) {
+    	if(dataDevolucao.before(new Date())) {
     		return true;
     	}
     	return false;
