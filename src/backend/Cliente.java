@@ -24,6 +24,7 @@ public class Cliente extends Pessoa {
 		}
 		return super.toString() + " - E-mail: " + email + "\nLivros alugados: \n" + livros + "\n";
 	}
+	
 	public void adicionarLivroAlugado(Livro livro) {
         livrosAlugados.add(livro);
     }
@@ -35,5 +36,14 @@ public class Cliente extends Pessoa {
 	public String getEmail() {
 		return email;
 	}
+
+	public List<Livro> getLivrosAlugados() {
+		return livrosAlugados;
+	}
+
+	public void setLivrosAlugados(List<Livro> livrosAlugados) {
+		this.livrosAlugados = livrosAlugados;
+	}
+	
 	
 }

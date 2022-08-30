@@ -170,13 +170,21 @@ public class Biblioteca {
 	public static boolean removerLivroTotal(Long id) {
 		for(Livro l : getLivros()) {
 			if(l.getId().equals(id)) {
-				
-				//Passar a linha como parametro para remocao
-				String linha = l.getId()+";"+l.getTitulo()+";"+l.getAutor()+";"+l.getEditora()+";"
+			
+				if(l.getQtdeTotal() == l.getQtdeDisponiveis()) {
+					
+					//Passar a linha como parametro para remocao
+					String linha = l.getId()+";"+l.getTitulo()+";"+l.getAutor()+";"+l.getEditora()+";"
 							+l.getEdicao()+";"+l.getGenero()+";"+l.getQtdeTotal()+";";
-				Arquivo.Remove("livro.txt", linha);
+					Arquivo.Remove("livro.txt", linha);
+					getLivros().remove(l);
+				} else {
+					int qtde = l.getQtdeTotal() - l.getQtdeDisponiveis();
+					removerLivroParcial(l.getId(), qtde);
+					l.setQtdeTotal(qtde);
+					l.setQtdeDisponiveis(0);
+				}
 				
-				getLivros().remove(l);
 				return true;
 			}
 		}	
@@ -356,4 +364,13 @@ public class Biblioteca {
 	}
 
 
+	public static List<Cliente> getClientes() {
+		return clientes;
+	}
+
+
+	public static void setClientes(List<Cliente> clientes) {
+		Biblioteca.clientes = clientes;
+	}
+	
 }

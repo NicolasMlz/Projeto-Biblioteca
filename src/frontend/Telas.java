@@ -469,13 +469,16 @@ public class Telas {
 				
 				//Alterar livro
 				int qtdeTotal=0;
+				int qtdeDisponiveis = 0;
 				for(Livro l : Biblioteca.getLivros()) {
 					if(l.getId() == id) {
 						qtdeTotal = l.getQtdeTotal();
+						qtdeDisponiveis = l.getQtdeDisponiveis();
 						break;
 					}
 				}
 				Livro novo = new Livro(id, titulo, autor, editora, edicao, genero, qtdeTotal);
+				novo.setQtdeDisponiveis(qtdeDisponiveis);
 				
 				if(Biblioteca.alterarLivro(id, novo)) {
 					System.out.println("Livro alterado com sucesso!");
@@ -556,6 +559,12 @@ public class Telas {
 				
 				//Alterar livro
 				Cliente novo = new Cliente(cpfNovo, nome, telefone, email);
+				
+				for(Cliente c : Biblioteca.getClientes()) {
+					if(c.getCpf().equals(cpf))
+					novo.setLivrosAlugados(c.getLivrosAlugados());
+				}
+				
 				Biblioteca.alterarCliente(cpf, novo);
 				
 				if(Biblioteca.alterarCliente(cpf, novo)) {
