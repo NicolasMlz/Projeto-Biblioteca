@@ -179,10 +179,21 @@ public class Biblioteca {
 					Arquivo.Remove("livro.txt", linha);
 					getLivros().remove(l);
 				} else {
+					
 					int qtde = l.getQtdeTotal() - l.getQtdeDisponiveis();
-					removerLivroParcial(l.getId(), qtde);
-					l.setQtdeTotal(qtde);
-					l.setQtdeDisponiveis(0);
+					
+					Livro li = new Livro(l.getId(), l.getTitulo(), l.getAutor(), l.getEditora(), l.getEdicao(), l.getGenero(), qtde);
+					li.setQtdeDisponiveis(0);
+					
+					String linha2 = l.getId()+";"+l.getTitulo()+";"+l.getAutor()+";"+l.getEditora()+";"
+							+l.getEdicao()+";"+l.getGenero()+";"+l.getQtdeTotal()+";";
+					Arquivo.Remove("livro.txt", linha2);
+					getLivros().remove(l);
+					
+					String linha = li.getId()+";"+li.getTitulo()+";"+li.getAutor()+";"+li.getEditora()+";"
+							+li.getEdicao()+";"+li.getGenero()+";"+li.getQtdeTotal()+";";
+					Arquivo.Write("livro.txt", linha);
+					getLivros().add(li);
 				}
 				
 				return true;
