@@ -99,7 +99,6 @@ public class Biblioteca {
 				return false;
 			}
 		}
-		
 		bibliotecarios.add(bibliotecario);
 		return true;
 	}
@@ -129,7 +128,7 @@ public class Biblioteca {
 				//Atualizar livro
 				l.atualizarQtde(qtde);
 				
-				//REescrever no arquivo
+				//Reescrever no arquivo
 				linha = l.getId()+";"+l.getTitulo()+";"+l.getAutor()+";"+l.getEditora()+";"
 						+l.getEdicao()+";"+l.getGenero()+";"+l.getQtdeTotal()+";\n";
 				Arquivo.Write("livro.txt", linha);
@@ -234,14 +233,16 @@ public class Biblioteca {
 
 	public static boolean removerCliente(Long cpf) {
 		for(Cliente c : clientes) {
-			if(c.getCpf().equals(cpf)) {
-				clientes.remove(c);
-				
-				//Passar a linha como parametro para remocao
-				String linha = c.getCpf()+";"+c.getNome()+";"+c.getTelefone()+";"+c.getEmail()+";";
-				Arquivo.Remove("cliente.txt", linha);
-				
-				return true;
+				if(c.getCpf().equals(cpf)) {
+					if(c.getLivrosAlugados().size() == 0) {
+					clientes.remove(c);
+					
+					//Passar a linha como parametro para remocao
+					String linha = c.getCpf()+";"+c.getNome()+";"+c.getTelefone()+";"+c.getEmail()+";";
+					Arquivo.Remove("cliente.txt", linha);
+					
+					return true;
+				}
 			}
 		}	
 		

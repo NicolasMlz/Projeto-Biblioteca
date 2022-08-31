@@ -72,7 +72,7 @@ public class Telas {
 
         //Condicao de entrada
         try{
-            exeption(login, senha);
+            exception(login, senha);
 
         } catch(SenhaInvalidaException e) {
             System.err.println(e.getMessage());
@@ -80,7 +80,7 @@ public class Telas {
         }
     }
 	
-	private static void exeption(String login, String senha) throws SenhaInvalidaException{
+	private static void exception(String login, String senha) throws SenhaInvalidaException{
         if(Biblioteca.loginCorreto(login, senha)) {
             System.out.println("Login efetuado com sucesso!");
             telaOpcoesSistema();
@@ -121,6 +121,9 @@ public class Telas {
             }
 
             //Cadastrar novo biblitecario
+            //Salvar no arquivo
+			String linha = cpf+";"+nome+";"+telefone+";"+matricula+";"+login+";"+senha+";\n";
+			Arquivo.Write("bibliotecario.txt", linha);
             Bibliotecario novo = new Bibliotecario(cpf, nome, telefone,  matricula, login, senha);
             Biblioteca.adicionarBibliotecario(novo);
 
@@ -377,30 +380,17 @@ public class Telas {
 			System.out.print("Digite a senha: ");
 			senha = sc.nextLine();
 			
-			for(Bibliotecario l : Biblioteca.getBibliotecarios()) {
-                if(l.getMatricula().equals(matricula)) {
-                    System.err.println("Erro! Matrícula já existente.");
-                    telaOpcoesSistema(); 
-                }
-                else if(l.getLogin().equals(login)) {
-                    System.err.println("Erro! Usuário já existente.");
-                    telaOpcoesSistema();
-                }
-            }
-			
-			//Cadastrar novo biblitecario
-			Bibliotecario novo = new Bibliotecario(cpf, nome, telefone,  matricula, login, senha);
-			
 			//Salvar no arquivo
-			String arq = "bibliotecario.txt";
 			String linha = cpf+";"+nome+";"+telefone+";"+matricula+";"+login+";"+senha+";\n";
+			Arquivo.Write("bibliotecario.txt", linha);
 			
 			//Saida
-			if(Biblioteca.adicionarBibliotecario(novo) && Arquivo.Write(arq, linha)) {
+			if(Biblioteca.adicionarBibliotecario(new Bibliotecario(cpf, nome, telefone,  matricula, login, senha))) {
 				System.out.println("Usuário cadastrado com sucesso!");
 			} else {
 				System.err.println("Falha ao cadastrar!");
 			}
+			
 		} catch (Exception e) {
 			System.err.println("Falha ao cadastrar bibliotecário!");
 			sc.nextLine();
