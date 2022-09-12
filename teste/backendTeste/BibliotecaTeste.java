@@ -1,11 +1,8 @@
 package backendTeste;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import org.junit.jupiter.api.Test;
-
-import arquivoTXT.Arquivo;
 import backend.Biblioteca;
-import backend.Bibliotecario;
 
 
 class BibliotecaTeste {

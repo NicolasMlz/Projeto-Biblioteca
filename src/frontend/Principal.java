@@ -8,6 +8,7 @@ public class Principal {
 		try {	
 			//Ler arquivos
 			//A leitura só funciona se houver pelo menos uma String em cada arquivo 
+			//Então a primeira linha de cada arquivo não pode ser modificada
 			Arquivo.ReadLivro("livro.txt");
 			Arquivo.ReadCliente("cliente.txt");
 			Arquivo.ReadBibliotecario("bibliotecario.txt");

@@ -19,6 +19,11 @@ public class Telas {
 	//VARIAVEIS
 	static Scanner sc = new Scanner(System.in);
 	
+	//CONSTRUTOR
+	private Telas() {
+		
+	}
+	
 	//METODOS
 	public static void telaPrincipal() {
 		
@@ -76,7 +81,7 @@ public class Telas {
 
         } catch(SenhaInvalidaException e) {
             System.err.println(e.getMessage());
-            telaLogin();
+            telaPrincipal();
         }
     }
 	
@@ -85,7 +90,7 @@ public class Telas {
             System.out.println("Login efetuado com sucesso!");
             telaOpcoesSistema();
         }
-        else throw new SenhaInvalidaException("Senha Inválida Exception!\nTente novamente.\n");
+        else throw new SenhaInvalidaException("Senha Inválida!\nTente novamente.\n");
     }
 	
 	private static void telaCadastro() {
@@ -176,7 +181,7 @@ public class Telas {
 				
 				//TELAS
 				if(escolha == 0) {
-					System.out.println("Bye!");
+					System.out.println("Até a próxima!");
 					System.exit(0);
 				} else if(escolha == 1) {
 					System.out.println(Biblioteca.consultarLivrosTotais());
@@ -222,7 +227,7 @@ public class Telas {
 			    } else if(escolha == 21) {
 			    	System.out.println(Biblioteca.consultarEmprestimosAtrasados());
 			    } else {
-					System.err.println("Opção nao registrada!\n");
+					System.err.println("Opção não registrada!\n");
 				}
 				 
 			} catch (Exception e) {
@@ -260,7 +265,7 @@ public class Telas {
 				sc.nextLine();
 			}
 		} catch (Exception e) {
-			System.err.println("Opcao invalida!");
+			System.err.println("Opção inválida!");
 			sc.nextLine();
 		}
 	
@@ -275,7 +280,7 @@ public class Telas {
 			matricula = sc.nextLong();
 			System.out.println(Biblioteca.consultarBibliotecarioUnico(matricula));
 		} catch (Exception e) {
-			System.err.println("Matricula invalida!");
+			System.err.println("Matricula inválida!");
 			sc.nextLine();
 		}		
 	}
@@ -287,7 +292,7 @@ public class Telas {
 			cpf = sc.nextLong();
 			System.out.println(Biblioteca.consultarClienteUnico(cpf));
 		} catch (Exception e) {
-			System.err.println("Cpf invalido!");
+			System.err.println("Cpf inválido!");
 			sc.nextLine();
 		}		
 	}
@@ -700,7 +705,6 @@ public class Telas {
 
     }
     
-    //FALTA ARQUIVO
     public static void telaDevolucao() {
     	
         //Variaveis

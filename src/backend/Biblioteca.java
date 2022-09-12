@@ -13,7 +13,7 @@ public class Biblioteca {
 	static List<Bibliotecario> bibliotecarios = new ArrayList<>();
 	static List<Emprestimo> emprestimos = new ArrayList<>();
 	static List<Cliente> clientes = new ArrayList<>();
-	private static List<Livro> livros = new ArrayList<>();
+	static List<Livro> livros = new ArrayList<>();
 	
 	
 	//CONSTRUTOR

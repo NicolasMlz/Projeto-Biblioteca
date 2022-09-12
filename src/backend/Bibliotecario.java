@@ -23,7 +23,7 @@ public class Bibliotecario extends Pessoa {
 	}
 	
 	
-	//GETTERS E SETTERS
+	//GETTERS 
 	public Long getMatricula() {
 		return matricula;
 	}

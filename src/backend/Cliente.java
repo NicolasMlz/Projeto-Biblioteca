@@ -32,7 +32,7 @@ public class Cliente extends Pessoa {
         livrosAlugados.remove(livro);
     }
     
-    //GET
+    //GETTERS E SETTERS
 	public String getEmail() {
 		return email;
 	}
